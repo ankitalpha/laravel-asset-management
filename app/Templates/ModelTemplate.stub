@@ -1,13 +1,27 @@
 <?php
 
-namespace JRApp\Models\{{namespace}};
+namespace Drivezy\LaravelAssetManager\Models;
 
-use JRApp\Models\BaseModel;
-use JRApp\Observers\{{namespace}}\{{name}}Observer;
+use Drivezy\LaravelUtility\Models\BaseModel;
 
+/**
+ * Class {{name}}
+ * @package Drivezy\LaravelAssetManager
+ *
+ * @see https://github.com/drivezy/laravel-asset-manager.
+ * @author Ankit Tiwari <ankit19.alpha@gmail.com>
+ */
 class {{name}} extends BaseModel {
+
+    /**
+     * @var string
+     * The {{name}} table name.
+     */
     protected $table = '{{table}}';
 
+    /**
+     * Boot observer.
+     */
     public static function boot () {
         parent::boot();
         self::observe(new {{name}}Observer());

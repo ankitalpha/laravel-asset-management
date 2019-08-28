@@ -1,18 +1,21 @@
 <?php
 
-namespace JRApp\Http\Controllers\{{namespace}};
+namespace Drivezy\LaravelAssetManager\Controllers;
 
-use JRApp\Http\Controllers\{{read}}RecordController;
-use JRApp\Libraries\Utility\RecordManagement;
-use JRApp\Models\{{namespace}}\{{name}};
+use Drivezy\LaravelRecordManager\Controllers\RecordController;
+use Drivezy\LaravelAssetManager\Models\{{name}};
 
+/**
+ * Class {{name}}Controller
+ * @package Drivezy\LaravelAssetManager\Controllers
+ *
+ * @see https://github.com/drivezy/laravel-asset-manager
+ * @author Ankit Tiwari <ankit19.alpha@gmail.com>
+ */
 class {{name}}Controller extends {{read}}RecordController {
-    private $model = {{name}}::class;
 
     /**
-     * {{name}}Controller constructor.
+     * @var {{name}} model path.
      */
-    public function __construct () {
-        RecordManagement::$model = $this->model;
-    }
+    private $model = {{name}}::class;
 }

@@ -1,9 +1,9 @@
 $table->increments('id');
 
-            $table->unsignedInteger('created_by')->nullable();
-            $table->unsignedInteger('updated_by')->nullable();
+$table->unsignedInteger('created_by')->nullable();
+$table->unsignedInteger('updated_by')->nullable();
 
-            $table->foreign('created_by')->references('id')->on('sys_users');
-            $table->foreign('updated_by')->references('id')->on('sys_users');
+$table->foreign('created_by')->references('id')->on('sys_users');
+$table->foreign('updated_by')->references('id')->on('sys_users');
 
-            $table->softDeletes();
+$table->softDeletes();

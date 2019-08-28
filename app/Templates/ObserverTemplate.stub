@@ -1,10 +1,22 @@
 <?php
 
-namespace JRApp\Observers\{{namespace}};
+namespace Drivezy\LaravelAssetManager\Observers;
 
-use JRApp\Observers\BaseObserver;
+use Drivezy\LaravelUtility\Observers\BaseObserver;
 
+/**
+ * Class {{name}}
+ * @package Drivezy\LaravelAssetManager
+ *
+ * @see https://github.com/drivezy/laravel-asset-manager.
+ * @author Ankit Tiwari <ankit19.alpha@gmail.com>
+ */
 class {{name}}Observer extends BaseObserver {
+
+
+    /**
+     * @var array Required parameters.
+     */
     protected $rules = [
     ];
 }

@@ -85,13 +85,13 @@ class GenerateDevelopmentCodeTemplateCommand extends Command {
         if ( is_dir(app_path() . '/Models/' . $this->namespace) ) return;
 
         mkdir(app_path() . '/Models/' . $this->namespace);
-        $this->info('Created Directory : ' . 'Models/' . $this->namespace);
+        $this->info('Created Directory : ' . 'Models' . $this->namespace);
 
         mkdir(app_path() . '/Observers/' . $this->namespace);
-        $this->info('Created Directory : ' . 'Observers/' . $this->namespace);
+        $this->info('Created Directory : ' . 'Observers' . $this->namespace);
 
         mkdir(app_path() . '/Controllers/' . $this->namespace);
-        $this->info('Created Directory : ' . 'Http/Controllers/' . $this->namespace);
+        $this->info('Created Directory : ' . 'Http/Controllers' . $this->namespace);
     }
 
     /**
