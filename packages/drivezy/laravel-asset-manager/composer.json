@@ -1,0 +1,18 @@
+{
+    "name": "drivezy/laravel-asset-manager",
+    "description": "Manages asset regarding availability and unavailability",
+    "type": "library",
+    "require": {
+        "drivezy/laravel-access-manager": "1.*",
+        "drivezy/laravel-record-manager": "1.*",
+        "drivezy/laravel-utility": "1.*",
+        "webpatser/laravel-uuid": "^3.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ankit Tiwari",
+            "email": "ankit.tiwari@drivezy.com"
+        }
+    ]
+}

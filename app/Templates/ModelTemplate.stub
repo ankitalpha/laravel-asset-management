@@ -1,0 +1,15 @@
+<?php
+
+namespace JRApp\Models\{{namespace}};
+
+use JRApp\Models\BaseModel;
+use JRApp\Observers\{{namespace}}\{{name}}Observer;
+
+class {{name}} extends BaseModel {
+    protected $table = '{{table}}';
+
+    public static function boot () {
+        parent::boot();
+        self::observe(new {{name}}Observer());
+    }
+}

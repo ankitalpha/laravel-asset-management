@@ -1,0 +1,18 @@
+<?php
+
+namespace JRApp\Http\Controllers\{{namespace}};
+
+use JRApp\Http\Controllers\{{read}}RecordController;
+use JRApp\Libraries\Utility\RecordManagement;
+use JRApp\Models\{{namespace}}\{{name}};
+
+class {{name}}Controller extends {{read}}RecordController {
+    private $model = {{name}}::class;
+
+    /**
+     * {{name}}Controller constructor.
+     */
+    public function __construct () {
+        RecordManagement::$model = $this->model;
+    }
+}

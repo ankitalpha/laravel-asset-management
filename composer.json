@@ -42,7 +42,11 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Drivezy\\LaravelMarketing\\": "packages/drivezy/laravel-marketing/src",
+            "Drivezy\\LaravelUtility\\": "packages/drivezy/laravel-marketing/vendor/drivezy/laravel-utility/src",
+            "Drivezy\\LaravelRecordManager\\": "packages/drivezy/laravel-marketing/vendor/drivezy/laravel-record-manager/src",
+            "Drivezy\\LaravelAccessManager\\": "packages/drivezy/laravel-marketing/vendor/drivezy/laravel-access-manager/src"
         }
     },
     "minimum-stability": "dev",

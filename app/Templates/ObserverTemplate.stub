@@ -1,0 +1,10 @@
+<?php
+
+namespace JRApp\Observers\{{namespace}};
+
+use JRApp\Observers\BaseObserver;
+
+class {{name}}Observer extends BaseObserver {
+    protected $rules = [
+    ];
+}
