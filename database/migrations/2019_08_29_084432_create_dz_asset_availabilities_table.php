@@ -6,13 +6,13 @@ use Illuminate\Database\Migrations\Migration;
 use Drivezy\LaravelUtility\LaravelUtility;
 
 /**
- * Class CreateDzAssetDetailsTable
+ * Class CreateDzAssetAvailabilitiesTable
  * @package Drivezy\LaravelAssetManager\Migrations
  *
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class CreateDzAssetDetailsTable extends Migration
+class CreateDzAssetAvailabilitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -21,25 +21,30 @@ class CreateDzAssetDetailsTable extends Migration
      */
     public function up ()
     {
-        Schema::create('dz_asset_details', function (Blueprint $table)
+        Schema::create('dz_asset_availabilities', function (Blueprint $table)
         {
             $userTable = LaravelUtility::getUserTable();
 
             $table->bigIncrements('id');
 
-            $table->name('name')->nullable();
-            $table->string('identifier')->nullable();
-            $table->boolean('active')->default(false);
+            $table->unsignedBigInteger('start_timestamp')->nullable();
+            $table->unsignedBigInteger('end_timestamp')->nullable();
 
-            $table->unsignedInteger('category_id')->nullable();
+            $table->unsignedInteger('asset_category_id')->nullable();
+            $table->unsignedInteger('asset_detail_id')->nullable();
 
-            $table->string('source_type')->nullable();
-            $table->unsignedInteger('source_id')->nullable();
+            $table->unsignedInteger('venue_id')->nullable();
+
+            $table->unsignedInteger('duration')->nullable()
+                ->comment('Duration of availability in seconds');
 
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
 
-            $table->foreign('category_id')->references('id')->on('dz_categories');
+            $table->foreign('asset_category_id')->references('id')->on('dz_categories');
+            $table->foreign('asset_detail_id')->references('id')->on('dz_asset_details');
+            $table->foreign('venue_id')->references('id')->on('dz_venues');
+
             $table->foreign('created_by')->references('id')->on($userTable);
             $table->foreign('updated_by')->references('id')->on($userTable);
 
@@ -55,6 +60,6 @@ class CreateDzAssetDetailsTable extends Migration
      */
     public function down ()
     {
-        Schema::dropIfExists('dz_asset_details');
+        Schema::dropIfExists('dz_asset_availabilities');
     }
 }
