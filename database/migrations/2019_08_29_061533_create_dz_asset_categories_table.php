@@ -6,13 +6,13 @@ use Illuminate\Database\Migrations\Migration;
 use Drivezy\LaravelUtility\LaravelUtility;
 
 /**
- * Class CreateDzZonesTable
+ * Class CreateDzAssetCategoriesTable
  * @package Drivezy\LaravelAssetManager\Migrations
  *
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class CreateDzZonesTable extends Migration
+class CreateDzAssetCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -21,7 +21,7 @@ class CreateDzZonesTable extends Migration
      */
     public function up ()
     {
-        Schema::create('dz_zones', function (Blueprint $table)
+        Schema::create('dz_asset_categories', function (Blueprint $table)
         {
             $userTable = LaravelUtility::getUserTable();
 
@@ -30,12 +30,12 @@ class CreateDzZonesTable extends Migration
             $table->string('name');
             $table->boolean('active')->default(false);
 
-            $table->unsignedInteger('region_id')->nullable();
+            $table->unsignedInteger('referenced_model_id')->nullable();
+
+            $table->foreign('referenced_model_id')->references('id')->on('dz_model_details');
 
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
-
-            $table->foreign('region_id')->references('id')->on('dz_regions');
 
             $table->foreign('created_by')->references('id')->on($userTable);
             $table->foreign('updated_by')->references('id')->on($userTable);
@@ -52,6 +52,6 @@ class CreateDzZonesTable extends Migration
      */
     public function down ()
     {
-        Schema::dropIfExists('dz_zones');
+        Schema::dropIfExists('dz_asset_categories');
     }
 }
