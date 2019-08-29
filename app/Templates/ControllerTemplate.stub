@@ -12,7 +12,8 @@ use Drivezy\LaravelAssetManager\Models\{{name}};
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class {{name}}Controller extends {{read}}RecordController {
+class {{name}}Controller extends {{read}}RecordController
+{
 
     /**
      * @var {{name}} model path.

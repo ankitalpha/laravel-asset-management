@@ -11,11 +11,11 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
  * @see https://github.com/drivezy/laravel-asset-manager.
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class CountryObserver extends BaseObserver {
+class CountryObserver extends BaseObserver
+{
 
     /**
      * @var array Required parameters.
      */
-    protected $rules = [
-    ];
+    protected $rules = [];
 }

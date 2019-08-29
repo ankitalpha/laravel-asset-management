@@ -3,20 +3,20 @@
 namespace Drivezy\LaravelAssetManager\Controllers;
 
 use Drivezy\LaravelRecordManager\Controllers\RecordController;
-use Drivezy\LaravelAssetManager\Models\Country;
+use Drivezy\LaravelAssetManager\Models\Region;
 
 /**
- * Class CountryController
+ * Class RegionController
  * @package Drivezy\LaravelAssetManager\Controllers
  *
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class CountryController extends RecordController
+class RegionController extends RecordController
 {
 
     /**
-     * @var Country model path.
+     * @var Region model path.
      */
-    protected $model = Country::class;
+    protected $model = Region::class;
 }
