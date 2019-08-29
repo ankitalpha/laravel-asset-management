@@ -17,5 +17,5 @@ class {{name}}Controller extends {{read}}RecordController {
     /**
      * @var {{name}} model path.
      */
-    private $model = {{name}}::class;
+    protected $model = {{name}}::class;
 }

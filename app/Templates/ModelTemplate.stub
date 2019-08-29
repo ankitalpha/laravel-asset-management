@@ -3,6 +3,7 @@
 namespace Drivezy\LaravelAssetManager\Models;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
+use Drivezy\LaravelAssetManager\Observers\{{name}}Observer;
 
 /**
  * Class {{name}}
