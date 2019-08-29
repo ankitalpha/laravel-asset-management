@@ -3,7 +3,16 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Drivezy\LaravelUtility\LaravelUtility;
 
+
+/**
+ * Class CreateDzRegionsTable
+ * @package Drivezy\LaravelAssetManager\Migrations
+ *
+ * @see https://github.com/drivezy/laravel-asset-manager
+ * @author Ankit Tiwari <ankit19.alpha@gmail.com>
+ */
 class CreateDzRegionsTable extends Migration
 {
     /**

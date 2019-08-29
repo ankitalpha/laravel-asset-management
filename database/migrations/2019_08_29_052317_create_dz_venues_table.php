@@ -6,23 +6,22 @@ use Illuminate\Database\Migrations\Migration;
 use Drivezy\LaravelUtility\LaravelUtility;
 
 /**
- * Class CreateDzCountriesTable
+ * Class CreateDzVenuesTable
  * @package Drivezy\LaravelAssetManager\Migrations
  *
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class CreateDzCountriesTable extends Migration
+class CreateDzVenuesTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up ()
+    public function up()
     {
-        Schema::create('dz_countries', function (Blueprint $table)
-        {
+        Schema::create('dz_venues', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
             $table->increments('id');
@@ -30,8 +29,12 @@ class CreateDzCountriesTable extends Migration
             $table->string('name');
             $table->boolean('active')->default(false);
 
+            $table->unsignedInteger('zone_id')->nullable();
+
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
+
+            $table->foreign('zone_id')->references('id')->on('dz_zones');
 
             $table->foreign('created_by')->references('id')->on($userTable);
             $table->foreign('updated_by')->references('id')->on($userTable);
@@ -46,8 +49,8 @@ class CreateDzCountriesTable extends Migration
      *
      * @return void
      */
-    public function down ()
+    public function down()
     {
-        Schema::dropIfExists('dz_countries');
+        Schema::dropIfExists('dz_venues');
     }
 }

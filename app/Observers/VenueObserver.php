@@ -5,13 +5,13 @@ namespace Drivezy\LaravelAssetManager\Observers;
 use Drivezy\LaravelUtility\Observers\BaseObserver;
 
 /**
- * Class Region
+ * Class Venue
  * @package Drivezy\LaravelAssetManager
  *
  * @see https://github.com/drivezy/laravel-asset-manager.
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class RegionObserver extends BaseObserver
+class VenueObserver extends BaseObserver
 {
 
     /**
