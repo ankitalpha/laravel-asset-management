@@ -3,23 +3,23 @@
 namespace Drivezy\LaravelAssetManager\Models;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
-use Drivezy\LaravelAssetManager\Observers\{{name}}Observer;
+use Drivezy\LaravelAssetManager\Observers\RegionObserver;
 
 /**
- * Class {{name}}
+ * Class Region
  * @package Drivezy\LaravelAssetManager
  *
  * @see https://github.com/drivezy/laravel-asset-manager.
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class {{name}} extends BaseModel
+class Region extends BaseModel
 {
 
     /**
      * @var string
-     * The {{name}} table name.
+     * The Region table name.
      */
-    protected $table = '{{table}}';
+    protected $table = 'dz_regions';
 
     /**
      * Boot observer.
@@ -27,6 +27,6 @@ class {{name}} extends BaseModel
     public static function boot ()
     {
         parent::boot();
-        self::observe(new {{name}}Observer());
+        self::observe(new RegionObserver());
     }
 }

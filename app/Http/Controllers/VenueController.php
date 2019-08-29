@@ -3,20 +3,20 @@
 namespace Drivezy\LaravelAssetManager\Controllers;
 
 use Drivezy\LaravelRecordManager\Controllers\RecordController;
-use Drivezy\LaravelAssetManager\Models\{{name}};
+use Drivezy\LaravelAssetManager\Models\Venue;
 
 /**
- * Class {{name}}Controller
+ * Class VenueController
  * @package Drivezy\LaravelAssetManager\Controllers
  *
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class {{name}}Controller extends {{read}}RecordController
+class VenueController extends RecordController
 {
 
     /**
-     * @var {{name}} model path.
+     * @var Venue model path.
      */
-    protected $model = {{name}}::class;
+    protected $model = Venue::class;
 }

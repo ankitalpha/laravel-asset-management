@@ -3,23 +3,23 @@
 namespace Drivezy\LaravelAssetManager\Models;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
-use Drivezy\LaravelAssetManager\Observers\{{name}}Observer;
+use Drivezy\LaravelAssetManager\Observers\ZoneObserver;
 
 /**
- * Class {{name}}
+ * Class Zone
  * @package Drivezy\LaravelAssetManager
  *
  * @see https://github.com/drivezy/laravel-asset-manager.
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class {{name}} extends BaseModel
+class Zone extends BaseModel
 {
 
     /**
      * @var string
-     * The {{name}} table name.
+     * The Zone table name.
      */
-    protected $table = '{{table}}';
+    protected $table = 'dz_zones';
 
     /**
      * Boot observer.
@@ -27,6 +27,6 @@ class {{name}} extends BaseModel
     public static function boot ()
     {
         parent::boot();
-        self::observe(new {{name}}Observer());
+        self::observe(new ZoneObserver());
     }
 }
