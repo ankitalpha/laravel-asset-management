@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
  * @package Drivezy\LaravelAssetManager\Library\Booking;
  *
  * @see https://github.com/drivezy/laravel-asset-manager
- * @author Ankit
+ * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
 class BookingUtility
 {

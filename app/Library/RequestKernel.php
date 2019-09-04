@@ -6,6 +6,9 @@ namespace Drivezy\LaravelAssetManager;
  * Class BaseBooking
  * @package Drivezy\LaravelAssetManager
  *
+ * @see https://github.com/drivezy/laravel-asset-manager
+ * @author Ankit Tiwari <ankit19.alpha@gmail.com>
+ * TODO think about a name.
  */
 class RequestKernel
 {

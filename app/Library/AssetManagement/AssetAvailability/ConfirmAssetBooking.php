@@ -16,21 +16,12 @@ class ConfirmAssetBooking extends BaseAvailability
 {
 
     /**
-     * ConfirmAssetBooking constructor.
-     * @param $request
-     */
-    public function __construct ($request)
-    {
-        parent::__construct($request);
-    }
-
-    /**
      * Process request
      */
     public function process ()
     {
         $this->setVariables();
-        $this->blockVehicle();
+        $this->blockAsset();
     }
 
     /**
@@ -45,14 +36,14 @@ class ConfirmAssetBooking extends BaseAvailability
     /**
      * Create new availability according to block.
      */
-    private function blockVehicle ()
+    private function blockAsset ()
     {
         $this->setPreviousAvailability();
         $this->setNextAvailability();
 
         $this->availability->forceDelete();
 
-        $this->createFutureAvailability();
+        $this->setFutureAvailability();
     }
 
     /**

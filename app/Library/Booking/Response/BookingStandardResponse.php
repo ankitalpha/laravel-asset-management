@@ -1,10 +1,12 @@
 <?php
 
+namespace Drivezy\LaravelAssetManager\Library\Booking\Response;
 /**
  * Class BookingStandardResponse
  * @package ${NAMESPACE}
  *
- * @see  task on JIRA
+ * @see https://github.com/drivezy/laravel-asset-manager
+ * @author Ankit Tiwari  ankit19.alpha@gmail.com>
  */
 class BookingStandardResponse
 {
@@ -17,14 +19,16 @@ class BookingStandardResponse
      * StandardResponseManager constructor.
      * @param $request
      */
-    public function __construct ($request) {
+    public function __construct ($request)
+    {
         $this->request = $request;
     }
 
     /**
      * @return mixed
      */
-    public function response () {
+    public function response ()
+    {
         return $this->request->booking;
     }
 }

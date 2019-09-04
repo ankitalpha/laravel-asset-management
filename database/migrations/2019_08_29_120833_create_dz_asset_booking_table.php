@@ -7,7 +7,7 @@ use Drivezy\LaravelUtility\LaravelUtility;
 
 /**
  * Class CreateDzAssetBookingTable
- * @package Drivezy\LaravelAssetManager\Migrations
+ * @package Drivezy\LaravelAssetManager\Database\Migrations
  *
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>

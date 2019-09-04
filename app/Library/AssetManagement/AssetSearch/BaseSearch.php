@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
  *
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
+ * TODO check with variables name
  */
 class BaseSearch
 {

@@ -79,7 +79,7 @@ class RevokeAssetAvailability extends BaseAvailability
             $this->createAvailability($this->startTime, $this->endTime, $this->venue->id);
         }
 
-        $this->createFutureAvailability();
+        $this->setFutureAvailability();
     }
 
     /**

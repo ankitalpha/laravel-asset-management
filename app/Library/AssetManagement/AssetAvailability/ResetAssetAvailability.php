@@ -3,6 +3,7 @@
 namespace Drivezy\LaravelAssetManager\Library\AssetManagement\AssetAvailability;
 
 use Drivezy\LaravelAssetManager\Models\AssetBooking;
+use Drivezy\LaravelUtility\Library\Message;
 
 /**
  * Class ResetAssetAvailability
@@ -31,27 +32,29 @@ class ResetAssetAvailability extends BaseAvailability
     /**
      * Process setting venues
      */
-    public function process () {
-        $response = $this->validation();
-
-        if ( !$response['success'] )
-            return $response;
+    public function process ()
+    {
+        if ( !$this->validation() )
+            return false;
 
         $this->resetAvailability();
+
+        return true;
     }
 
     /**
      * Validation checks to.
-     * @return array
+     * @return boolean
      */
-    private function validation () {
+    private function validation ()
+    {
         if ( !$this->assetDetail )
-            return failure_message('No such asset in system');
+            return Message::error('No such asset in system');
 
         if ( !$this->assetDetail->active )
-            return failure_message('Asset is inactive.');
+            return Message::error('Asset is inactive.');
 
-        return success_message('Validated');
+        return true;
     }
 
     /**
@@ -59,10 +62,11 @@ class ResetAssetAvailability extends BaseAvailability
      * Delete all availability
      * Fetch sorted array of blocking in ascending order
      */
-    private function resetAvailability () {
+    private function resetAvailability ()
+    {
         $this->deleteAllAvailability($this->assetDetail->id);
 
-        $this->getArrayOfBlocking();
+        $this->getSortedArrayOfBooking();
 
         if ( !$this->reset )
             $this->refreshAvailability();
@@ -76,15 +80,17 @@ class ResetAssetAvailability extends BaseAvailability
      * Get all maintenance blocks
      * merge above both array and sort it.
      */
-    private function getArrayOfBlocking () {
+    private function getSortedArrayOfBooking ()
+    {
         $this->getAllBookings();
-        $this->sortArray();
+        sort($this->bookings);
     }
 
     /**
      * Set availability of asset on a given venue
      */
-    private function setAvailability () {
+    private function setAvailability ()
+    {
         $time = $this->currentTime;
 
         foreach ( $this->bookings as $booking ) {
@@ -107,7 +113,8 @@ class ResetAssetAvailability extends BaseAvailability
     /**
      * Refresh the availability on drop_venue of bookings
      */
-    private function refreshAvailability () {
+    private function refreshAvailability ()
+    {
         $time = $this->currentTime;
         $venueId = $this->lastBookingVenue();
 
@@ -133,7 +140,8 @@ class ResetAssetAvailability extends BaseAvailability
     /**
      * Eloquent to give all bookings having drop time in future to current time
      */
-    private function getAllBookings () {
+    private function getAllBookings ()
+    {
         $this->bookings = AssetBooking::where('asset_detail_id', $this->assetDetail->id)
             ->where('status_id', '<', COMPLETED)
             ->where('end_time', '>=', $this->currentTime)
@@ -143,24 +151,16 @@ class ResetAssetAvailability extends BaseAvailability
     }
 
     /**
-     * Merge and sort array in ascending order of start time
-     * @return array|void|null
-     */
-    private function sortArray () {
-        sort($this->bookings);
-    }
-
-    /**
      * @return mixed
      */
-    private function lastBookingVenue () {
+    private function lastBookingVenue ()
+    {
         $booking = AssetBooking::where('asset_detail_id', $this->assetDetail->id)
             ->where('status_id', COMPLETED)
             ->where('end_time', '<', $this->currentTime)
             ->orderBy('end_time', 'desc')
             ->first();
 
-        //todo store by default assetdetail venue_id somewhere
-        return $booking ? $booking->drop_venue_id : $this->assetDetail->venue_id;
+        return $booking ? $booking->drop_venue_id : $this->assetDetail->home_venue_id;
     }
 }

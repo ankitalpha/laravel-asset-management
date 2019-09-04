@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
  * @package Drivezy\LaravelAssetManager\Library\AssetManagement\AssetAvailability
  *
  * @see https://github.com/drivezy/laravel-asset-manager
- * @author Ankit
+ * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
 class BaseAvailability
 {
@@ -126,20 +126,20 @@ class BaseAvailability
     }
 
     /**
-     * Delete All availability of the vehicle.
+     * Delete All availability of the AssetDetail.
      * @param $assetDetailId
      */
     public static function deleteAllAvailability ($assetDetailId)
     {
-        AssetAvailability::where('vehicle_id', $assetDetailId)->forceDelete();
+        AssetAvailability::where('asset_detail_id', $assetDetailId)->forceDelete();
     }
 
     /**
      * Will extend future availability with max future availability property
      */
-    protected function createFutureAvailability ()
+    protected function setFutureAvailability ()
     {
-        $asset = AssetAvailability::where('vehicle_id', $this->assetDetail->id)
+        $asset = AssetAvailability::where('asset_detail_id', $this->assetDetail->id)
             ->orderBy('end_time', 'DESC')
             ->first();
 

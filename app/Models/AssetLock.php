@@ -7,7 +7,7 @@ use Drivezy\LaravelAssetManager\Observers\AssetLockObserver;
 
 /**
  * Class AssetLock
- * @package Drivezy\LaravelAssetManager
+ * @package Drivezy\LaravelAssetManager\Models
  *
  * @see https://github.com/drivezy/laravel-asset-manager.
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>

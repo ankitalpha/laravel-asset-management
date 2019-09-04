@@ -6,7 +6,7 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
 
 /**
  * Class Address
- * @package Drivezy\LaravelAssetManager
+ * @package Drivezy\LaravelAssetManager\Observers
  *
  * @see https://github.com/drivezy/laravel-asset-manager.
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
