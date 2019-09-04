@@ -7,7 +7,7 @@ use Drivezy\LaravelAssetManager\Models\AssetAvailability;
 
 /**
  * Class ConfirmAssetBooking
- * @package Drivezy\LaravelAssetManager\Library\RecordManagment
+ * @package Drivezy\LaravelAssetManager\Library\AssetManagement\AssetAvailability
  *
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari  ankit19.alpha@gmail.com>
@@ -50,7 +50,7 @@ class ConfirmAssetBooking extends BaseAvailability
         $this->setPreviousAvailability();
         $this->setNextAvailability();
 
-        $this->assetAvailability->forceDelete();
+        $this->availability->forceDelete();
 
         $this->createFutureAvailability();
     }
@@ -61,7 +61,7 @@ class ConfirmAssetBooking extends BaseAvailability
      */
     private function setPreviousAvailability ()
     {
-        if ( $this->assetAvailability->start_time == $this->startTime ) return;
+        if ( $this->availability->start_time == $this->startTime ) return;
 
         if ( $this->previousAvailability ) {
             ( new AssetAvailabilityManagement([
@@ -69,7 +69,7 @@ class ConfirmAssetBooking extends BaseAvailability
             ], $this->previousAvailability
             ) )->update();
         } else {
-            $this->createAvailability($this->assetAvailability->start_time, $this->startTime, $this->assetAvailability->venue_id);
+            $this->createAvailability($this->availability->start_time, $this->startTime, $this->availability->venue_id);
         }
     }
 
@@ -79,7 +79,7 @@ class ConfirmAssetBooking extends BaseAvailability
      */
     private function setNextAvailability ()
     {
-        if ( $this->assetAvailability->end_time == $this->endTime ) return;
+        if ( $this->availability->end_time == $this->endTime ) return;
 
         if ( $this->nextAvailability ) {
             ( new AssetAvailabilityManagement([
@@ -97,9 +97,9 @@ class ConfirmAssetBooking extends BaseAvailability
      */
     private function getPreviousAvailability ()
     {
-        $this->previousAvailability = AssetAvailability::where('vehicle_id', $this->vehicle->id)
-            ->where('end_time', '<=', $this->assetAvailability->start_time)
-            ->where('id', '!=', $this->assetAvailability->id)
+        $this->previousAvailability = AssetAvailability::where('asset_detail_id', $this->assetDetail->id)
+            ->where('end_time', '<=', $this->availability->start_time)
+            ->where('id', '!=', $this->availability->id)
             ->orderBy('end_time', 'desc')
             ->first();
     }
@@ -109,9 +109,9 @@ class ConfirmAssetBooking extends BaseAvailability
      */
     public function getNextAvailability ()
     {
-        $this->nextAvailability = AssetAvailability::where('vehicle_id', $this->vehicle->id)
-            ->where('start_time', '>=', $this->assetAvailability->start_time)
-            ->where('id', '!=', $this->assetAvailability->id)
+        $this->nextAvailability = AssetAvailability::where('asset_detail_id', $this->assetDetail->id)
+            ->where('start_time', '>=', $this->availability->start_time)
+            ->where('id', '!=', $this->availability->id)
             ->orderBy('start_time', 'asc')
             ->first();
     }

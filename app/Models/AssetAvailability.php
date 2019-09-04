@@ -4,6 +4,7 @@ namespace Drivezy\LaravelAssetManager\Models;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelAssetManager\Observers\AssetAvailabilityObserver;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class AssetAvailability
@@ -20,6 +21,33 @@ class AssetAvailability extends BaseModel
      * The AssetAvailability table name.
      */
     protected $table = 'dz_asset_availabilities';
+
+    /**
+     * @return BelongsTo
+     * @return AssetDetail object
+     */
+    public function asset_detail ()
+    {
+        return $this->belongsTo(AssetDetail::class);
+    }
+
+    /**
+     * @return BelongsTo
+     * @return AssetCategory object
+     */
+    public function asset_category ()
+    {
+        return $this->belongsTo(AssetCategory::class);
+    }
+
+    /**
+     * @return BelongsTo
+     * @return Venue object
+     */
+    public function venue ()
+    {
+        return $this->belongsTo(Venue::class);
+    }
 
     /**
      * Boot observer.

@@ -32,7 +32,6 @@ class CreateDzAssetAvailabilitiesTable extends Migration
 
             $table->unsignedInteger('asset_category_id')->nullable();
             $table->unsignedInteger('asset_detail_id')->nullable();
-
             $table->unsignedInteger('venue_id')->nullable();
 
             $table->unsignedInteger('duration')->nullable()

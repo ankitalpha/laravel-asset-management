@@ -30,7 +30,7 @@ class CreateDzAssetBookingTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('asset_detail_id')->nullable();
 
-            $table->string('reference_number');
+            $table->string('reference_number')->unique();
 
             $table->dateTime('start_time');
             $table->dateTime('end_time');
@@ -44,6 +44,7 @@ class CreateDzAssetBookingTable extends Migration
             $table->unsignedInteger('type_id');
             $table->unsignedInteger('status_id')->nullable();
 
+            $table->decimal('amount')->default(1.0);
             $table->dateTime('confirmed_at')->nullable();
 
             $table->unsignedInteger('created_by')->nullable();

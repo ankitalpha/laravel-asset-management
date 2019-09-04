@@ -4,6 +4,7 @@ namespace Drivezy\LaravelAssetManager\Models;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelAssetManager\Observers\AssetDetailObserver;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class AssetDetail
@@ -20,6 +21,15 @@ class AssetDetail extends BaseModel
      * The AssetDetail table name.
      */
     protected $table = 'dz_asset_details';
+
+    /**
+     * @return BelongsTo
+     * @return AssetCategory object
+     */
+    public function asset_category ()
+    {
+        return $this->belongsTo(AssetCategory::class);
+    }
 
     /**
      * Boot observer.

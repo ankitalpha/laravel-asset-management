@@ -1,20 +1,26 @@
 <?php
 
 namespace Drivezy\LaravelAssetManager\Library\Booking;
-use Illuminate\Support\Str;
+
+use Drivezy\LaravelAssetManager\Models\AssetLock;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class BookingUtility
- * @package App\Library\Booking
+ * @package Drivezy\LaravelAssetManager\Library\Booking;
  *
- * @see  task on JIRA
+ * @see https://github.com/drivezy/laravel-asset-manager
+ * @author Ankit
  */
 class BookingUtility
 {
-
-    public static function toCamelCase ()
+    /**
+     * This method will drop the all the locks being acquired by the logged in user
+     * @return bool
+     */
+    public static function dropUserLock ()
     {
-        return Str::camel();
+        return AssetLock::where('user_id', Auth::id())->forceDelete();
     }
 
 }

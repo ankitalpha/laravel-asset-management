@@ -3,7 +3,6 @@
 namespace Drivezy\LaravelAssetManager\Library\AssetManagement\AssetAvailability;
 
 use Drivezy\LaravelAssetManager\Models\AssetAvailability;
-use Drivezy\LaravelUtility\LaravelUtility;
 use Drivezy\LaravelUtility\Library\DateUtil;
 use Illuminate\Support\Str;
 
@@ -11,7 +10,8 @@ use Illuminate\Support\Str;
  * Class BaseAvailability
  * @package Drivezy\LaravelAssetManager\Library\AssetManagement\AssetAvailability
  *
- * @see  task on JIRA
+ * @see https://github.com/drivezy/laravel-asset-manager
+ * @author Ankit
  */
 class BaseAvailability
 {
@@ -45,12 +45,6 @@ class BaseAvailability
      * @var null
      */
     public $availability = null;
-
-    /**
-     * Property that will give maximum future days till what availability have to be created.
-     * @var int
-     */
-    private $maxAvailabilityDays = 300;
 
     /**
      * To store date time till what future availability is to be created.
@@ -104,9 +98,7 @@ class BaseAvailability
         }
 
         $this->currentTime = DateUtil::getDateTime();
-
-        $this->maxAvailabilityDays = LaravelUtility::getProperty('future.availability.days', $this->maxAvailabilityDays);
-        $this->maxAvailabilityDateTime = DateUtil::getFutureTime($this->maxAvailabilityDays * 24 * 60, $this->currentTime);
+        $this->maxAvailabilityDateTime = '2100-01-01 00:00:00';
     }
 
     /**
@@ -119,7 +111,7 @@ class BaseAvailability
     {
         if ( DateUtil::getDateTimeDifference($startTime, $endTime) <= 0 ) return;
 
-        $asset = AssetAvailability::firstOrNew(
+        AssetAvailability::firstOrCreate(
             [
                 'start_timestamp'   => strtotime($startTime),
                 'end_timestamp'     => strtotime($endTime),
@@ -131,8 +123,6 @@ class BaseAvailability
                 'asset_category_id' => $this->assetDetail->category_id,
             ]
         );
-
-        $asset->save();
     }
 
     /**
