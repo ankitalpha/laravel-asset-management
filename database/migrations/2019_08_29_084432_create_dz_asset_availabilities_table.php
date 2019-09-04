@@ -40,7 +40,7 @@ class CreateDzAssetAvailabilitiesTable extends Migration
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
 
-            $table->foreign('asset_category_id')->references('id')->on('dz_categories');
+            $table->foreign('asset_category_id')->references('id')->on('dz_asset_categories');
             $table->foreign('asset_detail_id')->references('id')->on('dz_asset_details');
             $table->foreign('venue_id')->references('id')->on('dz_venues');
 

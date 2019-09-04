@@ -25,7 +25,7 @@ class CreateDzAssetBookingTable extends Migration
         {
             $userTable = LaravelUtility::getUserTable();
 
-            $table->bigIncrements('id');
+            $table->increments('id');
 
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('asset_detail_id')->nullable();

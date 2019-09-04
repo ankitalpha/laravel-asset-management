@@ -25,7 +25,7 @@ class CreateDzAddressDetailsTable extends Migration
         {
             $userTable = LaravelUtility::getUserTable();
 
-            $table->bigIncrements('id');
+            $table->increments('id');
 
             $table->string('name')->nullable();
             $table->string('postal_code')->nullable();

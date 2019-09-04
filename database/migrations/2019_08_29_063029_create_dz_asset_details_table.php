@@ -25,9 +25,9 @@ class CreateDzAssetDetailsTable extends Migration
         {
             $userTable = LaravelUtility::getUserTable();
 
-            $table->bigIncrements('id');
+            $table->increments('id');
 
-            $table->name('name')->nullable();
+            $table->string('name')->nullable();
             $table->string('identifier')->nullable();
             $table->boolean('active')->default(false);
 
@@ -39,7 +39,7 @@ class CreateDzAssetDetailsTable extends Migration
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
 
-            $table->foreign('asset_category_id')->references('id')->on('dz_categories');
+            $table->foreign('asset_category_id')->references('id')->on('dz_asset_categories');
             $table->foreign('created_by')->references('id')->on($userTable);
             $table->foreign('updated_by')->references('id')->on($userTable);
 
