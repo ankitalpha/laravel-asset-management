@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Library\RecordManagement;
+namespace Drivezy\LaravelAssetManager\Library\RecordManagement;
 
 use Drivezy\LaravelAssetManager\Models\AssetBooking;
+use Drivezy\LaravelUtility\LaravelUtility;
 
 /**
  * Class AssetBookingManagement
@@ -65,8 +66,8 @@ class AssetBookingManagement
         foreach ( $this->request as $key => $value )
             $this->assetBooking->setAttributes($key, $value);
 
-        //todo generate randome number for reference
-        $this->request->reference_number = '';
+        //todo change it with random number generator
+        $this->request->reference_number = LaravelUtility::generateRandomAlphaNumeric(12);
         $this->assetBooking->save();
 
         return $this->assetBooking;

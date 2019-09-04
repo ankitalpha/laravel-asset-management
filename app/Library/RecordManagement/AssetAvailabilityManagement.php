@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Library\RecordManagement;
+namespace Drivezy\LaravelAssetManager\Library\RecordManagement;
+
 use Drivezy\LaravelAssetManager\Models\AssetAvailability;
-use Drivezy\LaravelAssetManager\Models\AssetLock;
+use Drivezy\LaravelUtility\Library\DateUtil;
 
 /**
  * Class AssetAvailabilityManagement
@@ -67,7 +68,7 @@ class AssetAvailabilityManagement
 
         $this->assetAvailability->start_timestamp = strtotime($this->assetAvailability->start_time);
         $this->assetAvailability->end_timstamp = strtotime($this->assetAvailability->end_time);
-        $this->assetAvailability->duration = DateUtil::getDateTimeDifference($this->assetAvailability->expiry_time);
+        $this->assetAvailability->duration = DateUtil::getDateTimeDifference($this->assetAvailability->start_time, $this->assetAvailability->end_time);
 
         $this->assetAvailability->save();
 
