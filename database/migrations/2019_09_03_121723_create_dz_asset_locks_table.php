@@ -6,13 +6,13 @@ use Illuminate\Database\Migrations\Migration;
 use Drivezy\LaravelUtility\LaravelUtility;
 
 /**
- * Class CreateDzZonesTable
+ * Class CreateDzAssetLocksTable
  * @package Drivezy\LaravelAssetManager\Database\Migrations
  *
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class CreateDzZonesTable extends Migration
+class CreateDzAssetLocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -21,21 +21,28 @@ class CreateDzZonesTable extends Migration
      */
     public function up ()
     {
-        Schema::create('dz_zones', function (Blueprint $table)
+        Schema::create('dz_asset_locks', function (Blueprint $table)
         {
             $userTable = LaravelUtility::getUserTable();
 
-            $table->increments('id');
+            $table->bigIncrements('id');
 
-            $table->string('name');
-            $table->boolean('active')->default(false);
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('asset_detail_id');
 
-            $table->unsignedInteger('region_id')->nullable();
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
+            $table->dateTime('expiry_time');
+
+            $table->bigInteger('start_timestamp')->nullable();
+            $table->bigInteger('end_timestamp')->nullable();
+            $table->bigInteger('expiry_timestamp')->nullable();
 
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
 
-            $table->foreign('region_id')->references('id')->on('dz_regions');
+            $table->foreign('user_id')->references('id')->on($userTable);
+            $table->foreign('asset_detail_id')->references('id')->on('dz_asset_details');
 
             $table->foreign('created_by')->references('id')->on($userTable);
             $table->foreign('updated_by')->references('id')->on($userTable);
@@ -52,6 +59,6 @@ class CreateDzZonesTable extends Migration
      */
     public function down ()
     {
-        Schema::dropIfExists('dz_zones');
+        Schema::dropIfExists('dz_asset_locks');
     }
 }

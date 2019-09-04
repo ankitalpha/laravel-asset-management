@@ -7,7 +7,7 @@ use Drivezy\LaravelUtility\LaravelUtility;
 
 /**
  * Class CreateDzVenuesTable
- * @package Drivezy\LaravelAssetManager\Migrations
+ * @package Drivezy\LaravelAssetManager\Database\Migrations
  *
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
@@ -19,9 +19,10 @@ class CreateDzVenuesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up ()
     {
-        Schema::create('dz_venues', function (Blueprint $table) {
+        Schema::create('dz_venues', function (Blueprint $table)
+        {
             $userTable = LaravelUtility::getUserTable();
 
             $table->increments('id');
@@ -49,7 +50,7 @@ class CreateDzVenuesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down ()
     {
         Schema::dropIfExists('dz_venues');
     }

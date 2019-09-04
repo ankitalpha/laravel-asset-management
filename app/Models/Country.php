@@ -7,7 +7,7 @@ use Drivezy\LaravelAssetManager\Observers\CountryObserver;
 
 /**
  * Class Country
- * @package Drivezy\LaravelAssetManager
+ * @package Drivezy\LaravelAssetManager\Models
  *
  * @see https://github.com/drivezy/laravel-asset-manager.
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>

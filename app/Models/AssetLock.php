@@ -3,23 +3,23 @@
 namespace Drivezy\LaravelAssetManager\Models;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
-use Drivezy\LaravelAssetManager\Observers\RegionObserver;
+use Drivezy\LaravelAssetManager\Observers\AssetLockObserver;
 
 /**
- * Class Region
+ * Class AssetLock
  * @package Drivezy\LaravelAssetManager\Models
  *
  * @see https://github.com/drivezy/laravel-asset-manager.
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class Region extends BaseModel
+class AssetLock extends BaseModel
 {
 
     /**
      * @var string
-     * The Region table name.
+     * The AssetLock table name.
      */
-    protected $table = 'dz_regions';
+    protected $table = 'dz_asset_locks';
 
     /**
      * Boot observer.
@@ -27,6 +27,6 @@ class Region extends BaseModel
     public static function boot ()
     {
         parent::boot();
-        self::observe(new RegionObserver());
+        self::observe(new AssetLockObserver());
     }
 }
