@@ -2,8 +2,8 @@
 
 namespace Drivezy\LaravelAssetManager\Library\AssetManagement\AssetAvailability;
 
-use Drivezy\LaravelAssetManager\Library\RecordManagement\AssetAvailabilityManagement;
-use Drivezy\LaravelAssetManager\Models\AssetAvailability;
+
+use JRApp\Libraries\Utility\AssetManagement\AssetAvailabilityRecordManagement;
 
 /**
  * Class ConfirmAssetBooking
@@ -14,96 +14,143 @@ use Drivezy\LaravelAssetManager\Models\AssetAvailability;
  */
 class ConfirmAssetBooking extends BaseAvailability
 {
+    /**
+     * @var null
+     */
+    protected $pickupVenue = null;
 
     /**
-     * Process request
+     * @var null
      */
-    public function process ()
+    protected $dropVenue = null;
+
+    /**
+     * ConfirmAssetBlocking constructor.
+     * @param $request
+     */
+    public function __construct ($request)
     {
-        $this->setVariables();
-        $this->blockAsset();
+        parent::__construct($request);
     }
 
     /**
-     * Set variables for request
+     * ConfirmBooking for on an available slot
+     * Constraint that is fixed is that always one available slot will be provided to confirm block
+     * So, based on above constraint there are 4 possibilities of shrinking available slots
+     * Suppose _ (Dash) as available slot and @ (at) as block slot
+     *
+     * i) When blocking of asset is not same as available slot but in between of available slot
+     *    so shrink the middle part and make one left slot available record and one right slot available record
+     *    so slot will look like this _@_ (Dash at Dash)
+     *
+     *
+     * ii) When blocking of asset is same as right slot of available record but not the left part
+     *     so shrink the right part and make one left slot available record only
+     *     so slot will look like this _@(Dash at)
+     *
+     * iii) When blocking of asset is same as left slot of available record but not the right part
+     *      so shrink the right part and make one left slot available record only
+     *      so slot will look like this @_(at Dash)
+     *
+     * iv) When blocking of asset is same as the whole slot of available record.
+     *     So shrink whole asset availability
+     *      so slot will look like this @@(at at)
      */
-    private function setVariables ()
+    public function confirmBooking ()
     {
-        $this->getPreviousAvailability();
-        $this->getNextAvailability();
-    }
+        if ( $this->assetAvailability->start_time < $this->startTime
+            && $this->assetAvailability->end_time > $this->endTime ) {
+            return $this->shrinkMiddlePartOfAvailability();
+        }
 
-    /**
-     * Create new availability according to block.
-     */
-    private function blockAsset ()
-    {
-        $this->setPreviousAvailability();
-        $this->setNextAvailability();
+        if ( $this->assetAvailability->start_time < $this->startTime
+            && $this->assetAvailability->end_time == $this->endTime ) {
+            return $this->shrinkRightPartOfAvailability();
+        }
 
-        $this->availability->forceDelete();
+        if ( $this->assetAvailability->start_time == $this->startTime
+            && $this->assetAvailability->end_time > $this->endTime ) {
+            return $this->shrinkLeftPartOfAvailability();
+        }
 
-        $this->setFutureAvailability();
-    }
-
-    /**
-     * This will set previous availability record if any.
-     * else will create new availability record.
-     */
-    private function setPreviousAvailability ()
-    {
-        if ( $this->availability->start_time == $this->startTime ) return;
-
-        if ( $this->previousAvailability ) {
-            ( new AssetAvailabilityManagement([
-                'end_time' => $this->startTime,
-            ], $this->previousAvailability
-            ) )->update();
-        } else {
-            $this->createAvailability($this->availability->start_time, $this->startTime, $this->availability->venue_id);
+        if ( $this->assetAvailability->start_time == $this->startTime
+            && $this->assetAvailability->end_time == $this->endTime ) {
+            return $this->shrinkWholeAvailability();
         }
     }
 
     /**
-     * This will set next availability record if any.
-     * else will create new availability record.
+     *
      */
-    private function setNextAvailability ()
+    public function extension ()
     {
-        if ( $this->availability->end_time == $this->endTime ) return;
+        if ( $this->assetAvailability->end_time == $this->endTime )
+            $this->assetAvailability->forceDelete();
 
-        if ( $this->nextAvailability ) {
-            ( new AssetAvailabilityManagement([
-                'start_time' => $this->endTime,
-                'venue_id'   => $this->venue->id,
-            ], $this->nextAvailability
-            ) )->update();
-        } else {
-            $this->createAvailability($this->endTime, $this->maxAvailabilityDateTime, $this->venue->id);
-        }
+        ( new AssetAvailabilityRecordManagement([
+            'start_time' => $this->endTime,
+        ], $this->assetAvailability
+        ) )->update();
     }
 
     /**
-     * Fetch previous availability to AssetAvailability
+     *
      */
-    private function getPreviousAvailability ()
+    public function prepone ()
     {
-        $this->previousAvailability = AssetAvailability::where('asset_detail_id', $this->assetDetail->id)
-            ->where('end_time', '<=', $this->availability->start_time)
-            ->where('id', '!=', $this->availability->id)
-            ->orderBy('end_time', 'desc')
-            ->first();
+        if ( $this->assetAvailability->start_time == $this->startTime )
+            $this->assetAvailability->forceDelete();
+
+        ( new AssetAvailabilityRecordManagement([
+            'end_time' => $this->startTime,
+        ], $this->assetAvailability
+        ) )->update();
     }
 
     /**
-     * Fetch next availability to AssetAvailability
+     * When we have to make left and right part available
+     * And have to block the middle part of the availability
+     * _@_
      */
-    public function getNextAvailability ()
+    private function shrinkMiddlePartOfAvailability ()
     {
-        $this->nextAvailability = AssetAvailability::where('asset_detail_id', $this->assetDetail->id)
-            ->where('start_time', '>=', $this->availability->start_time)
-            ->where('id', '!=', $this->availability->id)
-            ->orderBy('start_time', 'asc')
-            ->first();
+        $this->createAvailability($this->assetAvailability->start_time, $this->startTime, $this->pickupVenue->id);
+
+        $this->createAvailability($this->endTime, $this->assetAvailability->end_time, $this->dropVenue->id);
+
+        $this->shrinkWholeAvailability();
+    }
+
+    /**
+     * When we have to make left part available
+     * And have to block right part
+     * _@
+     */
+    private function shrinkLeftPartOfAvailability ()
+    {
+        $this->createAvailability($this->endTime, $this->assetAvailability->end_time, $this->pickupVenue->id);
+
+        $this->shrinkWholeAvailability();
+    }
+
+    /**
+     * When we have to make right part available
+     * And have to block left part
+     * @_
+     */
+    private function shrinkRightPartOfAvailability ()
+    {
+        $this->createAvailability($this->assetAvailability->start_time, $this->startTime, $this->dropVenue->id);
+
+        $this->shrinkWholeAvailability();
+    }
+
+    /**
+     * when whole availability have to be blocked
+     * @@
+     */
+    private function shrinkWholeAvailability ()
+    {
+        $this->assetAvailability->forceDelete();
     }
 }

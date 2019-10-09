@@ -4,6 +4,7 @@ namespace Drivezy\LaravelAssetManager\Library\AssetManagement\AssetAvailability;
 
 use Drivezy\LaravelAssetManager\Library\RecordManagement\AssetAvailabilityManagement;
 use Drivezy\LaravelAssetManager\Models\Venue;
+use Drivezy\LaravelUtility\Library\DateUtil;
 
 /**
  * Class RevokeAssetAvailability
@@ -28,9 +29,42 @@ class RevokeAssetAvailability extends BaseAvailability
     protected $dropVenue = null;
 
     /**
-     * Process Request
+     * Case in which user have take asset before its booking start time
+     * We will set availability from the time asset was handed over.
+     * @return bool
      */
-    public function process ()
+    public function earlyHandoverOfAsset ()
+    {
+        $this->getPreviousAvailability();
+
+        if ( !$this->previousAvailability ) return true;
+
+        ( new AssetAvailabilityManagement([
+            'start_time' => DateUtil::getDateTime(),
+        ], $this->previousAvailability) )->update();
+    }
+
+    /**
+     * Case in which user have given back asset before its booking end time
+     * We will set availability from the time asset was returned.
+     */
+    public function earlyReturningOfAsset ()
+    {
+        $this->getNextAvailability();
+
+        if ( !$this->nextAvailability ) {
+            return $this->createAvailability(DateUtil::getDateTime(), $this->endTime, $this->dropVenue->id);
+        }
+
+        return ( new AssetAvailabilityManagement([
+            'start_time' => DateUtil::getDateTime(),
+        ], $this->nextAvailability) )->update();
+    }
+
+    /**
+     * Revoke availability
+     */
+    public function revoke ()
     {
         $this->getAvailability();
         $this->makeAvailability();
@@ -42,11 +76,26 @@ class RevokeAssetAvailability extends BaseAvailability
      */
     private function getAvailability ()
     {
+        $this->getPreviousAvailability();
+        $this->getNextAvailability();
+    }
+
+    /**
+     * Fetch previous availability
+     */
+    private function getPreviousAvailability ()
+    {
         $this->previousAvailability = AssetAvailability::where('end_time', $this->startTime)
             ->where('asset_detail_id', $this->assetDetail->id)
             ->where('venue_id', $this->pickupVenue->id)
             ->first();
+    }
 
+    /**
+     * Fetch next availability of asset.
+     */
+    private function getNextAvailability ()
+    {
         $this->nextAvailability = AssetAvailability::where('start_time', $this->endTime)
             ->where('asset_detail_id', $this->assetDetail->id)
             ->where('venue_id', $this->dropVenue->id)
@@ -78,8 +127,6 @@ class RevokeAssetAvailability extends BaseAvailability
         if ( !$this->previousAvailability && !$this->nextAvailability ) {
             $this->createAvailability($this->startTime, $this->endTime, $this->venue->id);
         }
-
-        $this->setFutureAvailability();
     }
 
     /**
@@ -101,7 +148,7 @@ class RevokeAssetAvailability extends BaseAvailability
     private function appendPreviousAvailability ()
     {
         ( new AssetAvailabilityManagement([
-            'end_time' => $this->end_time,
+            'end_time' => $this->endTime,
         ], $this->previousAvailability) )->update();
     }
 
@@ -111,7 +158,7 @@ class RevokeAssetAvailability extends BaseAvailability
     private function appendNextAvailability ()
     {
         ( new AssetAvailabilityManagement([
-            'start_time' => $this->start_time,
+            'start_time' => $this->startTime,
             'venue_id'   => $this->dropVenue->id,
         ], $this->nextAvailability) )->update();
     }

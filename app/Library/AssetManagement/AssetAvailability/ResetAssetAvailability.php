@@ -19,7 +19,7 @@ class ResetAssetAvailability extends BaseAvailability
      * Sorted with start_time ascending
      * @var AssetBooking object|null
      */
-    protected $bookings = null;
+    protected $bookings = [];
 
     /**
      * Reset Asset availability
@@ -144,9 +144,9 @@ class ResetAssetAvailability extends BaseAvailability
     {
         $this->bookings = AssetBooking::where('asset_detail_id', $this->assetDetail->id)
             ->where('status_id', '<', COMPLETED)
-            ->where('end_time', '>=', $this->currentTime)
+            ->where('end_time', '>=', $this->lastAvailabilityTime)
             ->orderBy('start_time', 'asc')
-            ->get(['start_time', 'end_time', 'pickup_venue_id', 'drop_venue_id'])
+            ->get(['actual_start_time AS start_time', 'actual_end_time AS end_time', 'pickup_venue_id', 'drop_venue_id'])
             ->toArray();
     }
 

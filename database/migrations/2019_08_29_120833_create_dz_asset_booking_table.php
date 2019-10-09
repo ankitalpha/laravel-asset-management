@@ -35,6 +35,9 @@ class CreateDzAssetBookingTable extends Migration
             $table->dateTime('start_time');
             $table->dateTime('end_time');
 
+            $table->dateTime('actual_start_time');
+            $table->dateTime('actual_end_time');
+
             $table->unsignedInteger('pickup_venue_id');
             $table->unsignedInteger('drop_venue_id');
 
