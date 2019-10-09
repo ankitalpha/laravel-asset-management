@@ -55,6 +55,6 @@ class AssetAvailability extends BaseModel
     public static function boot ()
     {
         parent::boot();
-        self::observe(new AssetAvailabilityObserver());
+//        self::observe(new AssetAvailabilityObserver());
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Drivezy\LaravelAssetManager\Controllers;
 
-use Drivezy\LaravelRecordManager\Controllers\RecordController;
+use Drivezy\LaravelRecordManager\Controllers\ReadRecordController;
 use Drivezy\LaravelAssetManager\Models\AssetAvailability;
 
 /**
@@ -12,7 +12,7 @@ use Drivezy\LaravelAssetManager\Models\AssetAvailability;
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class AssetAvailabilityController extends RecordController
+class AssetAvailabilityController extends ReadRecordController
 {
 
     /**

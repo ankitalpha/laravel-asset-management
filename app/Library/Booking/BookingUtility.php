@@ -22,5 +22,4 @@ class BookingUtility
     {
         return AssetLock::where('user_id', Auth::id())->forceDelete();
     }
-
 }
