@@ -21,8 +21,7 @@ class CreateDzAssetBookingTable extends Migration
      */
     public function up ()
     {
-        Schema::create('dz_asset_booking', function (Blueprint $table)
-        {
+        Schema::create('dz_asset_booking', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
             $table->increments('id');
@@ -30,10 +29,13 @@ class CreateDzAssetBookingTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('asset_detail_id')->nullable();
 
-            $table->string('reference_number')->unique();
+            $table->string('reference_number', 10)->unique();
 
             $table->dateTime('start_time');
             $table->dateTime('end_time');
+
+            $table->dateTime('actual_start_time');
+            $table->dateTime('actual_end_time');
 
             $table->unsignedInteger('pickup_venue_id');
             $table->unsignedInteger('drop_venue_id');

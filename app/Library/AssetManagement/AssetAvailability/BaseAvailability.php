@@ -76,6 +76,12 @@ class BaseAvailability
      */
     protected $nextAvailability = null;
 
+    /**
+     * Last availability time for reset if provided.
+     * @var null
+     */
+    protected $lastAvailabilityTime = null;
+
 
     /**
      * AssetAvailabilityManagement constructor.
@@ -98,6 +104,7 @@ class BaseAvailability
         }
 
         $this->currentTime = DateUtil::getDateTime();
+        $this->lastAvailabilityTime = $this->lastAvailabilityTime ? : $this->currentTime;
         $this->maxAvailabilityDateTime = '2100-01-01 00:00:00';
     }
 
@@ -132,20 +139,5 @@ class BaseAvailability
     public static function deleteAllAvailability ($assetDetailId)
     {
         AssetAvailability::where('asset_detail_id', $assetDetailId)->forceDelete();
-    }
-
-    /**
-     * Will extend future availability with max future availability property
-     */
-    protected function setFutureAvailability ()
-    {
-        $asset = AssetAvailability::where('asset_detail_id', $this->assetDetail->id)
-            ->orderBy('end_time', 'DESC')
-            ->first();
-
-        if ( !$asset ) return;
-
-        $asset->end_time = $this->maxAvailabilityDateTime;
-        $asset->save();
     }
 }

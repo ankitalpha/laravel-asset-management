@@ -66,8 +66,7 @@ class AssetBookingManagement
         foreach ( $this->request as $key => $value )
             $this->assetBooking->setAttributes($key, $value);
 
-        //todo change it with random number generator
-        $this->request->reference_number = LaravelUtility::generateRandomAlphaNumeric(12);
+        $this->request->reference_number = LaravelUtility::generateIdentifier(12, 0);
         $this->assetBooking->save();
 
         return $this->assetBooking;

@@ -15,7 +15,7 @@ class SearchAssetAvailability extends BaseSearch
      * Fetch one asset availability with/without venue reference.
      *
      * Required variable:
-     * $vehicleIds (int) (single id)
+     * $assetDetailIds (int) (single id)
      *
      * Optional variable:
      * $venueIds (int) (single id)
@@ -25,7 +25,7 @@ class SearchAssetAvailability extends BaseSearch
     public function hasOneAssetQuery ()
     {
         return $this->baseQueryForSlot()
-            ->where('asset_detail_id', $this->vehicleIds)
+            ->where('asset_detail_id',$this->assetDetailIds)
             ->when(isset($this->venueIds), function ($q)
             {
                 $q->where('venue_id', $this->venueIds);
@@ -36,7 +36,7 @@ class SearchAssetAvailability extends BaseSearch
      * Fetch many asset availability with/without venue reference.
      *
      * Required variable:
-     * $vehicleIds (array) (multiple id)
+     * $assetDetailIds (array) (multiple id)
      *
      * Optional variable:
      * $venueIds (array) (multiple id)
@@ -46,7 +46,7 @@ class SearchAssetAvailability extends BaseSearch
     public function hasManyAssetQuery ()
     {
         return $this->baseQueryForSlot()
-            ->whereIn('asset_detail_id', $this->vehicleIds)
+            ->whereIn('asset_detail_id',$this->assetDetailIds)
             ->when(isset($this->venueIds), function ($q)
             {
                 $q->whereIn('venue_id', $this->venueIds);
@@ -57,7 +57,7 @@ class SearchAssetAvailability extends BaseSearch
      * Fetch one asset model availability with/without venue reference.
      *
      * Required variable:
-     * $carIds (int) (single id)
+     * $categoryIds (int) (single id)
      *
      * Optional variable:
      * $venueIds (int) (single id)
@@ -67,7 +67,7 @@ class SearchAssetAvailability extends BaseSearch
     public function hasOneAssetModelQuery ()
     {
         return $this->baseQueryForSlot()
-            ->where('asset_category_id', $this->carIds)
+            ->where('asset_category_id', $this->categoryIds)
             ->when(isset($this->venueIds), function ($q)
             {
                 $q->where('venue_id', $this->venueIds);
@@ -78,7 +78,7 @@ class SearchAssetAvailability extends BaseSearch
      * Fetch many asset model availability with/without venue reference.
      *
      * Required variable:
-     * $carIds (array) (multiple id)
+     * $categoryIds (array) (multiple id)
      *
      * Optional variable:
      * $venueIds (array) (multiple id)
@@ -88,7 +88,7 @@ class SearchAssetAvailability extends BaseSearch
     public function hasManyAssetModelQuery ()
     {
         return $this->baseQueryForSlot()
-            ->whereIn('asset_category_id', $this->carIds)
+            ->whereIn('asset_category_id', $this->categoryIds)
             ->when(isset($this->venueIds), function ($q)
             {
                 $q->whereIn('venue_id', $this->venueIds);
@@ -99,10 +99,10 @@ class SearchAssetAvailability extends BaseSearch
      * Fetch all asset model availability on a venue.
      *
      * Required variable:
-     * $venueId (int) (single id)
+     * $venueIds (int) (single id)
      *
      * Optional variable:
-     * $car (int) (single id)
+     * $categoryIds (int) (single id)
      *
      * @return mixed
      */
@@ -110,9 +110,9 @@ class SearchAssetAvailability extends BaseSearch
     {
         return $this->baseQueryForSlot()
             ->where('venue_id', $this->venueIds)
-            ->when(isset($this->carIds), function ($q)
+            ->when(isset($this->categoryIds), function ($q)
             {
-                $q->where('asset_category_id', $this->carIds);
+                $q->where('asset_category_id', $this->categoryIds);
             });
     }
 
@@ -120,10 +120,10 @@ class SearchAssetAvailability extends BaseSearch
      * Fetch all asset model availability on a venue.
      *
      * Required variable:
-     * $venueId (array) (multiple id)
+     * $venueIds (array) (multiple id)
      *
      * Optional variable:
-     * $car (array) (multiple id)
+     * $categoryIds (array) (multiple id)
      *
      * @return mixed
      */
@@ -131,9 +131,9 @@ class SearchAssetAvailability extends BaseSearch
     {
         return $this->baseQueryForSlot()
             ->whereIn('venue_id', $this->venueIds)
-            ->when(isset($this->carIds), function ($q)
+            ->when(isset($this->categoryIds), function ($q)
             {
-                $q->whereIn('asset_category_id', $this->carIds);
+                $q->whereIn('asset_category_id', $this->categoryIds);
             });
     }
 

@@ -8,11 +8,9 @@ namespace Drivezy\LaravelAssetManager;
  *
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
- * TODO think about a name.
  */
-class RequestKernel
+class RequestManagment
 {
-
     /**
      * Request variables
      * @var array
@@ -23,7 +21,13 @@ class RequestKernel
      * Flag that will break process and sanitizer
      * @var bool
      */
-    protected $listen = true;
+    protected static $listen = true;
+
+    /**
+     * Error code for front end to understand the next possible action
+     * @var int|null
+     */
+    public static $errorCode = null;
 
     /**
      * BaseBooking constructor.
@@ -63,7 +67,10 @@ class RequestKernel
 
         $this->process();
 
-        return success_message($this->request->response);
+        if ( self::$listen ) {
+            return success_message($this->request ? : []);
+        } else
+            return failure_message('Something went wrong', self::$errorCode);
     }
 
     /**
@@ -90,7 +97,7 @@ class RequestKernel
         foreach ( $this->sanitizers as $sanitizer ) {
             $this->request = ( new $sanitizer($this->request) )->sanitize();
 
-            if(!$this->listen) break;
+            if ( !self::$listen ) break;
         }
     }
 
@@ -117,7 +124,7 @@ class RequestKernel
         foreach ( $this->process as $process ) {
             $this->request = ( new $process($this->request) )->process();
 
-            if(!$this->listen) break;
+            if ( !self::$listen ) break;
         }
     }
 }
