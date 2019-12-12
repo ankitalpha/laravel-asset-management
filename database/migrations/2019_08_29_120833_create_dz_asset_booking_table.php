@@ -37,9 +37,6 @@ class CreateDzAssetBookingTable extends Migration
             $table->dateTime('actual_start_time');
             $table->dateTime('actual_end_time');
 
-            $table->unsignedInteger('pickup_venue_id');
-            $table->unsignedInteger('drop_venue_id');
-
             $table->unsignedInteger('pickup_address_id')->nullable();
             $table->unsignedInteger('drop_address_id')->nullable();
 
@@ -54,9 +51,6 @@ class CreateDzAssetBookingTable extends Migration
 
             $table->foreign('user_id')->references('id')->on($userTable);
             $table->foreign('asset_detail_id')->references('id')->on('dz_asset_details');
-
-            $table->foreign('pickup_venue_id')->references('id')->on('dz_venues');
-            $table->foreign('drop_venue_id')->references('id')->on('dz_venues');
 
             $table->foreign('pickup_address_id')->references('id')->on('dz_address_details');
             $table->foreign('drop_address_id')->references('id')->on('dz_address_details');

@@ -21,8 +21,7 @@ class CreateDzAddressDetailsTable extends Migration
      */
     public function up ()
     {
-        Schema::create('dz_address_details', function (Blueprint $table)
-        {
+        Schema::create('dz_address_details', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
             $table->increments('id');
@@ -35,16 +34,20 @@ class CreateDzAddressDetailsTable extends Migration
 
             $table->double('latitude', 10, 8)->nullable();
             $table->double('longitude', 10, 7)->nullable();
+            $table->boolean('active')->default(true);
 
             $table->string('source_type')->nullable();
             $table->unsignedInteger('source_id')->nullable();
 
+            $table->unsignedInteger('zone_id')->nullable();
             $table->unsignedInteger('address_type_id')->nullable();
 
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
 
+            $table->foreign('zone_id')->references('id')->on('dz_zones');
             $table->foreign('address_type_id')->references('id')->on('dz_lookup_types');
+
             $table->foreign('created_by')->references('id')->on($userTable);
             $table->foreign('updated_by')->references('id')->on($userTable);
 

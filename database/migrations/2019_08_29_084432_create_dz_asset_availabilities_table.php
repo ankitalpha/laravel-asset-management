@@ -21,8 +21,7 @@ class CreateDzAssetAvailabilitiesTable extends Migration
      */
     public function up ()
     {
-        Schema::create('dz_asset_availabilities', function (Blueprint $table)
-        {
+        Schema::create('dz_asset_availabilities', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
             $table->bigIncrements('id');
@@ -32,7 +31,7 @@ class CreateDzAssetAvailabilitiesTable extends Migration
 
             $table->unsignedInteger('asset_category_id')->nullable();
             $table->unsignedInteger('asset_detail_id')->nullable();
-            $table->unsignedInteger('venue_id')->nullable();
+            $table->unsignedInteger('address_id')->nullable();
 
             $table->unsignedInteger('duration')->nullable()
                 ->comment('Duration of availability in seconds');
@@ -42,7 +41,7 @@ class CreateDzAssetAvailabilitiesTable extends Migration
 
             $table->foreign('asset_category_id')->references('id')->on('dz_asset_categories');
             $table->foreign('asset_detail_id')->references('id')->on('dz_asset_details');
-            $table->foreign('venue_id')->references('id')->on('dz_venues');
+            $table->foreign('address_id')->references('id')->on('dz_address_details');
 
             $table->foreign('created_by')->references('id')->on($userTable);
             $table->foreign('updated_by')->references('id')->on($userTable);
