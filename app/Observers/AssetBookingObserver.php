@@ -13,9 +13,13 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
  */
 class AssetBookingObserver extends BaseObserver
 {
-
     /**
      * @var array Required parameters.
      */
-    protected $rules = [];
+    protected $rules = [
+        'user_id'           => 'required',
+        'asset_detail_id'   => 'required',
+        'pickup_address_id' => 'required',
+        'drop_address_id'   => 'required',
+    ];
 }

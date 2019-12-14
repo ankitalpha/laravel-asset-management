@@ -14,7 +14,6 @@ use Drivezy\LaravelAssetManager\Observers\VenueObserver;
  */
 class Venue extends BaseModel
 {
-
     /**
      * @var string
      * The Venue table name.

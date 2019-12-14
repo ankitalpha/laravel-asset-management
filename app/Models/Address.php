@@ -3,8 +3,10 @@
 namespace Drivezy\LaravelAssetManager\Models;
 
 use Drivezy\LaravelAssetManager\Observers\AddressObserver;
+use Drivezy\LaravelUtility\LaravelUtility;
 use Drivezy\LaravelUtility\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class Address
@@ -15,7 +17,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Address extends BaseModel
 {
-
     /**
      * @var string
      * The Address table name.
@@ -23,48 +24,37 @@ class Address extends BaseModel
     protected $table = 'dz_address_details';
 
     /**
-     * @return BelongsTo
+     * @return HasOne
+     * @return The User object
      */
-    public function asset_booking ()
+    public function user ()
     {
-        return $this->belongsTo(AssetBooking::class, 'source_id', 'id')
-            ->where('source_type', md5(AssetBooking::class));
+        return $this->hasOne(LaravelUtility::getUserModelFullQualifiedName(), 'id', 'source_id')
+            ->where('source_type', md5(LaravelUtility::getUserModelFullQualifiedName()));
     }
 
     /**
-     * @return BelongsTo
-     */
-    public function venue ()
-    {
-        return $this->belongsTo(Venue::class, 'source_id', 'id')
-            ->where('source_type', md5(Venue::class));
-    }
-
-    /**
-     * @return BelongsTo
+     * @return HasOne
      */
     public function zone ()
     {
-        return $this->belongsTo(Zone::class, 'source_id', 'id')
-            ->where('source_type', md5(Zone::class));
+        return $this->hasOne(Zone::class, 'id', 'source_id')->where('source_type', md5(Zone::class));
     }
 
     /**
-     * @return BelongsTo
+     * @return HasOne
      */
     public function region ()
     {
-        return $this->belongsTo(Region::class, 'source_id', 'id')
-            ->where('source_type', md5(Region::class));
+        return $this->hasOne(Region::class, 'id', 'source_id')->where('source_type', md5(Region::class));
     }
 
     /**
-     * @return BelongsTo
+     * @return HasOne
      */
     public function country ()
     {
-        return $this->belongsTo(Country::class, 'source_id', 'id')
-            ->where('source_type', md5(Country::class));
+        return $this->hasOne(Country::class, 'id', 'source_id')->where('source_type', md5(Country::class));
     }
 
     /**

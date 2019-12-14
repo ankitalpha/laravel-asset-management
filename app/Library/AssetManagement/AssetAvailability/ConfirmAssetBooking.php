@@ -2,8 +2,7 @@
 
 namespace Drivezy\LaravelAssetManager\Library\AssetManagement\AssetAvailability;
 
-
-use JRApp\Libraries\Utility\AssetManagement\AssetAvailabilityRecordManagement;
+use Drivezy\LaravelAssetManager\Library\RecordManagement\AssetAvailabilityManagement;
 
 /**
  * Class ConfirmAssetBooking
@@ -87,7 +86,7 @@ class ConfirmAssetBooking extends BaseAvailability
         if ( $this->assetAvailability->end_time == $this->endTime )
             $this->assetAvailability->forceDelete();
 
-        ( new AssetAvailabilityRecordManagement([
+        ( new AssetAvailabilityManagement([
             'start_time' => $this->endTime,
         ], $this->assetAvailability
         ) )->update();
@@ -101,7 +100,7 @@ class ConfirmAssetBooking extends BaseAvailability
         if ( $this->assetAvailability->start_time == $this->startTime )
             $this->assetAvailability->forceDelete();
 
-        ( new AssetAvailabilityRecordManagement([
+        ( new AssetAvailabilityManagement([
             'end_time' => $this->startTime,
         ], $this->assetAvailability
         ) )->update();

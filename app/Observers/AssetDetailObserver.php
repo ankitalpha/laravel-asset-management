@@ -13,9 +13,10 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
  */
 class AssetDetailObserver extends BaseObserver
 {
-
     /**
      * @var array Required parameters.
      */
-    protected $rules = [];
+    protected $rules = [
+        'asset_category_id' => 'required',
+    ];
 }

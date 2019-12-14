@@ -13,7 +13,6 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
  */
 class AssetAvailabilityObserver extends BaseObserver
 {
-
     /**
      * @var array Required parameters.
      */

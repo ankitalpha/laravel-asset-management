@@ -4,6 +4,7 @@ namespace Drivezy\LaravelAssetManager\Models;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelAssetManager\Observers\RegionObserver;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class Region
@@ -14,12 +15,19 @@ use Drivezy\LaravelAssetManager\Observers\RegionObserver;
  */
 class Region extends BaseModel
 {
-
     /**
      * @var string
      * The Region table name.
      */
     protected $table = 'dz_regions';
+
+    /**
+     * @return HasOne
+     */
+    public function country ()
+    {
+        return $this->hasOne(Country::class);
+    }
 
     /**
      * Boot observer.

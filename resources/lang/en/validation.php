@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Validation Language Lines
+    | Validator Language Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines contain the default error messages used by
@@ -119,7 +119,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Custom Validation Language Lines
+    | Custom Validator Language Lines
     |--------------------------------------------------------------------------
     |
     | Here you may specify custom validation messages for attributes using the
@@ -136,7 +136,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Custom Validation Attributes
+    | Custom Validator Attributes
     |--------------------------------------------------------------------------
     |
     | The following language lines are used to swap our attribute placeholder

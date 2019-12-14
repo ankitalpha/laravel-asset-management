@@ -13,9 +13,11 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
  */
 class ZoneObserver extends BaseObserver
 {
-
     /**
      * @var array Required parameters.
      */
-    protected $rules = [];
+    protected $rules = [
+        'name'    => 'required',
+        'zone_id' => 'required',
+    ];
 }

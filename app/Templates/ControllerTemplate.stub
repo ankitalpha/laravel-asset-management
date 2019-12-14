@@ -14,7 +14,6 @@ use Drivezy\LaravelAssetManager\Models\{{name}};
  */
 class {{name}}Controller extends {{read}}RecordController
 {
-
     /**
      * @var {{name}} model path.
      */

@@ -14,7 +14,6 @@ namespace Drivezy\LaravelAssetManager\Library\Booking\BookingType;
  */
 class DemoBooking
 {
-
     /**
      * Pre validation request
      *

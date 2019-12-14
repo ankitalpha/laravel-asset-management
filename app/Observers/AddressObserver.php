@@ -13,13 +13,11 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
  */
 class AddressObserver extends BaseObserver
 {
-
     /**
      * @var array Required parameters.
      */
     protected $rules = [
         'house_address' => 'required',
         'source_type'   => 'required',
-        'source_id'     => 'required',
     ];
 }

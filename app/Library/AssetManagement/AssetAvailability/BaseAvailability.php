@@ -81,7 +81,6 @@ class BaseAvailability
      */
     protected $lastAvailabilityTime = null;
 
-
     /**
      * AssetAvailabilityManagement constructor.
      * @param $request

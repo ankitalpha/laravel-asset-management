@@ -14,7 +14,6 @@ use Drivezy\LaravelAssetManager\Observers\CountryObserver;
  */
 class Country extends BaseModel
 {
-
     /**
      * @var string
      * The Country table name.

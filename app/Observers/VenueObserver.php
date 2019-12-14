@@ -13,7 +13,6 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
  */
 class VenueObserver extends BaseObserver
 {
-
     /**
      * @var array Required parameters.
      */

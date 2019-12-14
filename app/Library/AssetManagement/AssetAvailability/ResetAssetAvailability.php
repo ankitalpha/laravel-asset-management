@@ -16,7 +16,7 @@ class ResetAssetAvailability extends BaseAvailability
 {
     /**
      * Pending and active Bookings array
-     * Sorted with start_time ascending
+     * Sorted with actual_start_time ascending
      * @var AssetBooking object|null
      */
     protected $bookings = [];
@@ -43,7 +43,7 @@ class ResetAssetAvailability extends BaseAvailability
     }
 
     /**
-     * Validation checks to.
+     * Validator checks to.
      * @return boolean
      */
     private function validation ()
@@ -94,15 +94,15 @@ class ResetAssetAvailability extends BaseAvailability
         $time = $this->currentTime;
 
         foreach ( $this->bookings as $booking ) {
-            if ( $time >= $booking['start_time'] ) {
-                if ( $time <= $booking['end_time'] )
-                    $time = $booking['end_time'];
+            if ( $time >= $booking['actual_start_time'] ) {
+                if ( $time <= $booking['actual_end_time'] )
+                    $time = $booking['actual_end_time'];
 
                 continue;
             }
 
-            $this->createAvailability($time, $booking['start_time'], $this->address->id);
-            $time = $booking['end_time'];
+            $this->createAvailability($time, $booking['actual_start_time'], $this->address->id);
+            $time = $booking['actual_end_time'];
         }
 
         if ( $time < $this->maxAvailabilityDateTime )
@@ -119,17 +119,17 @@ class ResetAssetAvailability extends BaseAvailability
         $addressId = $this->lastBookingAddressId();
 
         foreach ( $this->bookings as $booking ) {
-            if ( $time >= $booking['start_time'] ) {
-                if ( $time <= $booking['end_time'] ) {
-                    $time = $booking['end_time'];
+            if ( $time >= $booking['actual_start_time'] ) {
+                if ( $time <= $booking['actual_end_time'] ) {
+                    $time = $booking['actual_end_time'];
                     $addressId = $booking['drop_address_id'];
                 }
 
                 continue;
             }
 
-            $this->createAvailability($time, $booking['start_time'], $addressId);
-            $time = $booking['end_time'];
+            $this->createAvailability($time, $booking['actual_start_time'], $addressId);
+            $time = $booking['actual_end_time'];
             $addressId = $booking['drop_address_id'];
         }
 
@@ -144,9 +144,9 @@ class ResetAssetAvailability extends BaseAvailability
     {
         $this->bookings = AssetBooking::where('asset_detail_id', $this->assetDetail->id)
             ->where('status_id', '<', COMPLETED)
-            ->where('end_time', '>=', $this->lastAvailabilityTime)
-            ->orderBy('start_time', 'asc')
-            ->get(['actual_start_time AS start_time', 'actual_end_time AS end_time', 'pickup_address_id', 'drop_address_id'])
+            ->where('actual_end_time', '>=', $this->lastAvailabilityTime)
+            ->orderBy('actual_start_time', 'asc')
+            ->get(['actual_start_time', 'actual_end_time', 'pickup_address_id', 'drop_address_id'])
             ->toArray();
     }
 
@@ -157,8 +157,8 @@ class ResetAssetAvailability extends BaseAvailability
     {
         $booking = AssetBooking::where('asset_detail_id', $this->assetDetail->id)
             ->where('status_id', COMPLETED)
-            ->where('end_time', '<', $this->currentTime)
-            ->orderBy('end_time', 'desc')
+            ->where('actual_end_time', '<', $this->currentTime)
+            ->orderBy('actual_end_time', 'desc')
             ->first();
 
         return $booking ? $booking->drop_address_id : $this->assetDetail->address_id;

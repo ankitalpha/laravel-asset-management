@@ -14,7 +14,6 @@ use Drivezy\LaravelAssetManager\Observers\{{name}}Observer;
  */
 class {{name}} extends BaseModel
 {
-
     /**
      * @var string
      * The {{name}} table name.

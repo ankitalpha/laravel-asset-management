@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Library\Booking\Sanitizer;
+namespace Drivezy\LaravelAssetManager\Library\Booking\Validator;
 /**
  * todo this is just a demo class to understand structure of RequestManagement framework
  * todo delete after you understand the structure
- *
- * Class DemoSanitizer
- * @package App\Library\Booking\Sanitizer
+ * Class DemoValidator
+ * @package App\Library\Booking\Validator
  *
  * @see https://github.com/drivezy/laravel-asset-manager
- * @author Ankit Tiwari <ankit19.alpha@gmail.com>
+ * @author Ankit Tiwari  ankit19.alpha@gmail.com>
  */
-class DemoSanitizer
+class DemoValidator
 {
+
     /**
      * The request variable.
      * var array|null
@@ -20,7 +20,7 @@ class DemoSanitizer
     public $request = null;
 
     /**
-     * DemoSanitizer constructor.
+     * DemoValidator constructor.
      * @param $request array
      */
     public function __construct ($request)

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drivezy\LaravelAssetManager;
+namespace Drivezy\LaravelAssetManager\Library;
 
 /**
  * Class BaseBooking
@@ -95,7 +95,7 @@ class RequestManagment
     public function sanitizer ()
     {
         foreach ( $this->sanitizers as $sanitizer ) {
-            $this->request = ( new $sanitizer($this->request) )->sanitize();
+            $this->request = ( new $sanitizer($this->request) )->sanitiser();
 
             if ( !self::$listen ) break;
         }
@@ -122,7 +122,7 @@ class RequestManagment
     public function process ()
     {
         foreach ( $this->process as $process ) {
-            $this->request = ( new $process($this->request) )->process();
+            $this->request = ( new $process($this->request) )->procedure();
 
             if ( !self::$listen ) break;
         }

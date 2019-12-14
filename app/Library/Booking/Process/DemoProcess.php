@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Library\Booking\Process;
+namespace Drivezy\LaravelAssetManager\Library\Booking\Process;
 
+use Drivezy\LaravelAssetManager\Library\Process;
 use JRApp\Libraries\Booking\CustomBooking;
 
 /**
@@ -14,23 +15,8 @@ use JRApp\Libraries\Booking\CustomBooking;
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari <ankit19.alpha@gmail.com>
  */
-class DemoProcess
+class DemoProcess extends Process
 {
-    /**
-     * The request variable.
-     * var array|null
-     */
-    protected $request = null;
-
-    /**
-     * CreateCancellationRecord constructor.
-     * @param $request array
-     */
-    public function __construct ($request)
-    {
-        $this->request = $request;
-    }
-
     /**
      * Process request
      * @return array|null

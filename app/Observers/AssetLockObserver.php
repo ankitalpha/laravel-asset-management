@@ -13,9 +13,11 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
  */
 class AssetLockObserver extends BaseObserver
 {
-
     /**
      * @var array Required parameters.
      */
-    protected $rules = [];
+    protected $rules = [
+        'user_id'     => 'required',
+        'expiry_time' => 'required',
+    ];
 }
