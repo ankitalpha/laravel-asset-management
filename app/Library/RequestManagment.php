@@ -92,10 +92,10 @@ class RequestManagment
      * Sanitize request
      * @return mixed|void
      */
-    public function sanitizer ()
+    public function sanitiser ()
     {
-        foreach ( $this->sanitizers as $sanitizer ) {
-            $this->request = ( new $sanitizer($this->request) )->sanitiser();
+        foreach ( $this->sanitisers as $sanitiser ) {
+            $this->request = ( new $sanitiser($this->request) )->sanitiser();
 
             if ( !self::$listen ) break;
         }
@@ -108,7 +108,7 @@ class RequestManagment
     public function postValidation ()
     {
         foreach ( $this->postValidations as $validation ) {
-            $this->request = ( new $validation($this->request) )->validate();
+            $this->request = ( new $validation($this->request) )->validation();
 
             if ( !$this->request ) return false;
         }

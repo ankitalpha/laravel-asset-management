@@ -25,7 +25,7 @@ class DemoBooking
      * Request sanitizer
      * @var array
      */
-    public $sanitizers = [];
+    public $sanitisers = [];
 
     /**
      * Post validation request.
