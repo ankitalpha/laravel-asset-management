@@ -29,10 +29,12 @@ class CreateDzAssetDetailsTable extends Migration
 
             $table->string('name')->nullable();
             $table->string('identifier')->nullable();
-            $table->boolean('active')->default(false);
 
             $table->unsignedInteger('asset_category_id')->nullable();
             $table->unsignedInteger('address_id')->nullable();
+
+            $table->boolean('active')->default(false);
+            $table->boolean('return_overdue')->default(false);
 
             $table->string('source_type')->nullable();
             $table->unsignedInteger('source_id')->nullable();
