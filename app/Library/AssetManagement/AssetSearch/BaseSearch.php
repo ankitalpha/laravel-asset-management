@@ -15,7 +15,6 @@ use Illuminate\Support\Str;
  */
 class BaseSearch
 {
-
     /**
      * BaseSearchUtility constructor.
      * @param $request

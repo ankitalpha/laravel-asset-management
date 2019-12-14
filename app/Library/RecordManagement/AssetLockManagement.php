@@ -13,7 +13,6 @@ use Drivezy\LaravelAssetManager\Models\AssetLock;
  */
 class AssetLockManagement
 {
-
     /**
      * The request variable.
      * var array|null

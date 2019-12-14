@@ -3,13 +3,16 @@
 namespace Drivezy\LaravelAssetManager\Library\Booking\BookingType;
 
 /**
- * Class MaintenanceBooking
- * @package Drivezy\LaravelAssetManager\Library\Booking\BookingType
+ * todo this is just a demo class to understand structure of RequestManagement framework
+ * todo delete after you understand the structure
+ *
+ * Class DemoBooking
+ * @package Drivezy\LaravelAssetManager\Library\Booking\Type
  *
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari  ankit19.alpha@gmail.com>
  */
-class MaintenanceBooking
+class DemoBooking
 {
 
     /**

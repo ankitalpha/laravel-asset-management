@@ -23,14 +23,14 @@ class ResetAssetAvailability extends BaseAvailability
 
     /**
      * Reset Asset availability
-     * True will reset all asset availability record and recreate it to the venue given
+     * True will reset all asset availability record and recreate it to the address given
      * False will just refresh position with timing.
      * @var bool
      */
     protected $reset = false;
 
     /**
-     * Process setting venues
+     * Process setting add
      */
     public function process ()
     {
@@ -87,7 +87,7 @@ class ResetAssetAvailability extends BaseAvailability
     }
 
     /**
-     * Set availability of asset on a given venue
+     * Set availability of asset on a given address
      */
     private function setAvailability ()
     {
@@ -101,40 +101,40 @@ class ResetAssetAvailability extends BaseAvailability
                 continue;
             }
 
-            $this->createAvailability($time, $booking['start_time'], $this->venue->id);
+            $this->createAvailability($time, $booking['start_time'], $this->address->id);
             $time = $booking['end_time'];
         }
 
         if ( $time < $this->maxAvailabilityDateTime )
-            $this->createAvailability($time, $this->maxAvailabilityDateTime, $this->venue->id);
+            $this->createAvailability($time, $this->maxAvailabilityDateTime, $this->address->id);
     }
 
 
     /**
-     * Refresh the availability on drop_venue of bookings
+     * Refresh the availability on drop_address of bookings
      */
     private function refreshAvailability ()
     {
         $time = $this->currentTime;
-        $venueId = $this->lastBookingVenue();
+        $addressId = $this->lastBookingAddressId();
 
         foreach ( $this->bookings as $booking ) {
             if ( $time >= $booking['start_time'] ) {
                 if ( $time <= $booking['end_time'] ) {
                     $time = $booking['end_time'];
-                    $venueId = $booking['drop_venue_id'];
+                    $addressId = $booking['drop_address_id'];
                 }
 
                 continue;
             }
 
-            $this->createAvailability($time, $booking['start_time'], $venueId);
+            $this->createAvailability($time, $booking['start_time'], $addressId);
             $time = $booking['end_time'];
-            $venueId = $booking['drop_venue_id'];
+            $addressId = $booking['drop_address_id'];
         }
 
         if ( $time < $this->maxAvailabilityDateTime )
-            $this->createAvailability($time, $this->maxAvailabilityDateTime, $venueId);
+            $this->createAvailability($time, $this->maxAvailabilityDateTime, $addressId);
     }
 
     /**
@@ -146,14 +146,14 @@ class ResetAssetAvailability extends BaseAvailability
             ->where('status_id', '<', COMPLETED)
             ->where('end_time', '>=', $this->lastAvailabilityTime)
             ->orderBy('start_time', 'asc')
-            ->get(['actual_start_time AS start_time', 'actual_end_time AS end_time', 'pickup_venue_id', 'drop_venue_id'])
+            ->get(['actual_start_time AS start_time', 'actual_end_time AS end_time', 'pickup_address_id', 'drop_address_id'])
             ->toArray();
     }
 
     /**
      * @return mixed
      */
-    private function lastBookingVenue ()
+    private function lastBookingAddressId ()
     {
         $booking = AssetBooking::where('asset_detail_id', $this->assetDetail->id)
             ->where('status_id', COMPLETED)
@@ -161,6 +161,6 @@ class ResetAssetAvailability extends BaseAvailability
             ->orderBy('end_time', 'desc')
             ->first();
 
-        return $booking ? $booking->drop_venue_id : $this->assetDetail->home_venue_id;
+        return $booking ? $booking->drop_address_id : $this->assetDetail->address_id;
     }
 }

@@ -15,7 +15,6 @@ use Illuminate\Support\Str;
  */
 class BaseAvailability
 {
-
     /**
      * The requested parameters
      * @var array
@@ -35,10 +34,10 @@ class BaseAvailability
     protected $assetDetail = null;
 
     /**
-     * The Venue object
+     * The Address object
      * @var null
      */
-    protected $venue = null;
+    protected $address = null;
 
     /**
      * The AssetAvailability record.
@@ -112,9 +111,9 @@ class BaseAvailability
      * Create Availability time
      * @param $startTime
      * @param $endTime
-     * @param $venueId
+     * @param $addressId
      */
-    protected function createAvailability ($startTime, $endTime, $venueId)
+    protected function createAvailability ($startTime, $endTime, $addressId)
     {
         if ( DateUtil::getDateTimeDifference($startTime, $endTime) <= 0 ) return;
 
@@ -125,7 +124,7 @@ class BaseAvailability
                 'start_time'        => $startTime,
                 'end_time'          => $endTime,
                 'duration'          => DateUtil::getDateTimeDifference($startTime, $endTime),
-                'venue_id'          => $venueId,
+                'address_id'        => $addressId,
                 'asset_detail_id'   => $this->assetDetail->id,
                 'asset_category_id' => $this->assetDetail->category_id,
             ]

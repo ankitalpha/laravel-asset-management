@@ -14,7 +14,6 @@ use Drivezy\LaravelUtility\Library\DateUtil;
  */
 class AssetAvailabilityManagement
 {
-
     /**
      * The request variable.
      * var array|null

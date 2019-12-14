@@ -14,7 +14,6 @@ use Drivezy\LaravelUtility\LaravelUtility;
  */
 class AssetBookingManagement
 {
-
     /**
      * The request variable.
      * var array|null
