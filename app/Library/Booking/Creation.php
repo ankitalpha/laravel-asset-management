@@ -34,16 +34,14 @@ class Creation extends RequestManagment
      * @return array
      * @throws \Exception
      */
-    public function createBooking ()
+    public function book ()
     {
         $result = $this->classInstance->execute();
 
         if ( !$result['success'] )
             return $result;
 
-        $this->bookCar();
-
-        $this->getResponse();
+        $this->create();
 
         return success_message($this->request);
     }
@@ -51,11 +49,12 @@ class Creation extends RequestManagment
     /**
      * This method will the book car based on booking type
      */
-    public function bookCar ()
+    public function create ()
     {
         Utility::dropUserLock();
-        $this->createBookingObject();
+        $this->createBookingRecord();
         Utility::createAssetLock($this->request->booking, $this->request->lockTime ?? false);
+        $this->getResponse();
     }
 
 
@@ -63,7 +62,7 @@ class Creation extends RequestManagment
      * Prepares initial booking parameters that are available.
      * And create The Booking record
      */
-    private function createBookingObject ()
+    private function createBookingRecord ()
     {
         $this->request->booking = new AssetBooking();
 

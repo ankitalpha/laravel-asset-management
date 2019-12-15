@@ -40,6 +40,6 @@ class AssetAvailabilityController extends RecordController
         $request->request->set('create_booking', true);
         $booking = ( new Management($request->all()) )->request;
 
-        return fixed_response(( new Creation($booking) )->createBooking());
+        return fixed_response(( new Creation($booking) )->book());
     }
 }
