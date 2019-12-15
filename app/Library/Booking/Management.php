@@ -1,6 +1,9 @@
 <?php
 
 namespace Drivezy\LaravelAssetManager\Library\Booking;
+
+use Drivezy\LaravelAssetManager\Library\Booking\BookingType\DemoBooking;
+
 /**
  * Class Management
  * @package App\Library\Booking
@@ -23,5 +26,19 @@ class Management
     public function __construct ($request)
     {
         $this->request = $request;
+        $this->request = $this->classInstance();
+    }
+
+    /**
+     * Return class instance of the type of the booking request is made on.
+     * @return DemoBooking
+     */
+    public function classInstance ()
+    {
+        switch ( $this->request->type ) {
+            case 'Demo Booking' :
+            default :
+                return ( new DemoBooking($this->request) );
+        }
     }
 }

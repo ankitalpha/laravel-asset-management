@@ -7,6 +7,7 @@ use Drivezy\LaravelAssetManager\Models\Address;
 use Drivezy\LaravelAssetManager\Models\AssetBooking;
 use Drivezy\LaravelAssetManager\Models\AssetDetail;
 use Drivezy\LaravelAssetManager\Models\AssetLock;
+use Drivezy\LaravelUtility\Library\DateUtil;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
@@ -85,5 +86,19 @@ class Utility
             if ( 0 == AssetBooking::where('reference_number', '=', $token)->count() )
                 return $token;
         }
+    }
+
+    public static function createAssetLock ($args, $lockTime = false)
+    {
+        $assetLock = new AssetLock();
+
+        $columns = Utility::getColumns('dz_asset_locks', ['id']);
+
+        foreach ( $columns as $column ) {
+            $assetLock->$column = $args->$column ?? null;
+        }
+
+        $assetLock->expiry_time = $lockTime ?? DateUtil::getFutureTime(5);
+        $assetLock->save();
     }
 }

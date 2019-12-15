@@ -2,6 +2,7 @@
 
 namespace Drivezy\LaravelAssetManager\Library\Booking;
 
+use Drivezy\LaravelAssetManager\Library\RequestManagment;
 use Drivezy\LaravelAssetManager\Models\AssetBooking;
 
 /**
@@ -11,27 +12,21 @@ use Drivezy\LaravelAssetManager\Models\AssetBooking;
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari  ankit19.alpha@gmail.com>
  */
-class Creation
+class Creation extends RequestManagment
 {
+    /**
+     * @var null
+     */
+    private $classInstance = null;
+
     /**
      * Creation constructor.
      * @param $request
      */
     public function __construct ($request)
     {
-        $bookingObject = ( new Management($request) )->request;
-
-        $this->preValidations = $bookingObject->preValidations;
-        $this->sanitisers = $bookingObject->sanitisers;
-        $this->postValidations = $bookingObject->postValidations;
-
-        $this->process = $bookingObject->process;
-        $this->responseManager = $bookingObject->responseManager;
-
-        //todo create it accordingly
-        array_push($this->preValidations, BookingCreationRequestValidation::class);
-
-        $this->request = $bookingObject->request;
+        $this->request = $request->request;
+        $this->classInstance = $request;
     }
 
     /**
@@ -41,15 +36,10 @@ class Creation
      */
     public function createBooking ()
     {
-        if ( !$this->preValidation() )
-            return $this->request = failure_message($this->request);
+        $result = $this->classInstance->execute();
 
-        $this->sanitiser();
-
-        if ( !$this->postValidation() )
-            return $this->request = failure_message($this->request);
-
-        $this->process();
+        if ( !$result['success'] )
+            return $result;
 
         $this->bookCar();
 
@@ -65,6 +55,7 @@ class Creation
     {
         Utility::dropUserLock();
         $this->createBookingObject();
+        Utility::createAssetLock($this->request->booking, $this->request->lockTime ?? false);
     }
 
 
@@ -91,7 +82,7 @@ class Creation
      */
     private function getResponse ()
     {
-        foreach ( $this->responseManager as $responseManager ) {
+        foreach ( $this->classInstance->responseManager as $responseManager ) {
             $this->request = ( new $responseManager($this->request) )->response();
         }
     }
