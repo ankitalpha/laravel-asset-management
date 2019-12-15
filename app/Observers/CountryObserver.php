@@ -13,9 +13,10 @@ use Drivezy\LaravelUtility\Observers\BaseObserver;
  */
 class CountryObserver extends BaseObserver
 {
-
     /**
      * @var array Required parameters.
      */
-    protected $rules = [];
+    protected $rules = [
+        'name' => 'required',
+    ];
 }

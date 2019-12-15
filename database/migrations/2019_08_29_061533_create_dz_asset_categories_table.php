@@ -21,8 +21,7 @@ class CreateDzAssetCategoriesTable extends Migration
      */
     public function up ()
     {
-        Schema::create('dz_asset_categories', function (Blueprint $table)
-        {
+        Schema::create('dz_asset_categories', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
             $table->increments('id');
@@ -30,9 +29,7 @@ class CreateDzAssetCategoriesTable extends Migration
             $table->string('name');
             $table->boolean('active')->default(false);
 
-            $table->unsignedInteger('referenced_model_id')->nullable();
-
-            $table->foreign('referenced_model_id')->references('id')->on('dz_model_details');
+            $table->string('model_hash')->nullable();
 
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();

@@ -3,7 +3,7 @@
 namespace Drivezy\LaravelAssetManager\Library\AssetManagement\AssetAvailability;
 
 use Drivezy\LaravelAssetManager\Library\RecordManagement\AssetAvailabilityManagement;
-use Drivezy\LaravelAssetManager\Models\Venue;
+use Drivezy\LaravelAssetManager\Models\Address;
 use Drivezy\LaravelUtility\Library\DateUtil;
 
 /**
@@ -15,18 +15,17 @@ use Drivezy\LaravelUtility\Library\DateUtil;
  */
 class RevokeAssetAvailability extends BaseAvailability
 {
+    /**
+     * Pickup address of Asset booking
+     * @var Address object|null
+     */
+    protected $pickupAddress = null;
 
     /**
-     * Pickup venue of Asset booking
-     * @var Venue object|null
+     * Drop address of Asset booking
+     * @var Address object|null
      */
-    protected $pickupVenue = null;
-
-    /**
-     * Drop venue of Asset booking
-     * @var Venue object|null
-     */
-    protected $dropVenue = null;
+    protected $dropAddress = null;
 
     /**
      * Case in which user have take asset before its booking start time
@@ -53,7 +52,7 @@ class RevokeAssetAvailability extends BaseAvailability
         $this->getNextAvailability();
 
         if ( !$this->nextAvailability ) {
-            return $this->createAvailability(DateUtil::getDateTime(), $this->endTime, $this->dropVenue->id);
+            return $this->createAvailability(DateUtil::getDateTime(), $this->endTime, $this->dropAddress->id);
         }
 
         return ( new AssetAvailabilityManagement([
@@ -87,7 +86,7 @@ class RevokeAssetAvailability extends BaseAvailability
     {
         $this->previousAvailability = AssetAvailability::where('end_time', $this->startTime)
             ->where('asset_detail_id', $this->assetDetail->id)
-            ->where('venue_id', $this->pickupVenue->id)
+            ->where('address_id', $this->pickupAddress->id)
             ->first();
     }
 
@@ -98,7 +97,7 @@ class RevokeAssetAvailability extends BaseAvailability
     {
         $this->nextAvailability = AssetAvailability::where('start_time', $this->endTime)
             ->where('asset_detail_id', $this->assetDetail->id)
-            ->where('venue_id', $this->dropVenue->id)
+            ->where('address_id', $this->dropAddress->id)
             ->first();
     }
 
@@ -125,7 +124,7 @@ class RevokeAssetAvailability extends BaseAvailability
         }
 
         if ( !$this->previousAvailability && !$this->nextAvailability ) {
-            $this->createAvailability($this->startTime, $this->endTime, $this->venue->id);
+            $this->createAvailability($this->startTime, $this->endTime, $this->address->id);
         }
     }
 
@@ -159,7 +158,7 @@ class RevokeAssetAvailability extends BaseAvailability
     {
         ( new AssetAvailabilityManagement([
             'start_time' => $this->startTime,
-            'venue_id'   => $this->dropVenue->id,
+            'address_id' => $this->dropAddress->id,
         ], $this->nextAvailability) )->update();
     }
 }

@@ -2,8 +2,7 @@
 
 namespace Drivezy\LaravelAssetManager\Library\AssetManagement\AssetAvailability;
 
-
-use JRApp\Libraries\Utility\AssetManagement\AssetAvailabilityRecordManagement;
+use Drivezy\LaravelAssetManager\Library\RecordManagement\AssetAvailabilityManagement;
 
 /**
  * Class ConfirmAssetBooking
@@ -17,12 +16,12 @@ class ConfirmAssetBooking extends BaseAvailability
     /**
      * @var null
      */
-    protected $pickupVenue = null;
+    protected $pickupAddress = null;
 
     /**
      * @var null
      */
-    protected $dropVenue = null;
+    protected $dropAddress = null;
 
     /**
      * ConfirmAssetBlocking constructor.
@@ -87,7 +86,7 @@ class ConfirmAssetBooking extends BaseAvailability
         if ( $this->assetAvailability->end_time == $this->endTime )
             $this->assetAvailability->forceDelete();
 
-        ( new AssetAvailabilityRecordManagement([
+        ( new AssetAvailabilityManagement([
             'start_time' => $this->endTime,
         ], $this->assetAvailability
         ) )->update();
@@ -101,7 +100,7 @@ class ConfirmAssetBooking extends BaseAvailability
         if ( $this->assetAvailability->start_time == $this->startTime )
             $this->assetAvailability->forceDelete();
 
-        ( new AssetAvailabilityRecordManagement([
+        ( new AssetAvailabilityManagement([
             'end_time' => $this->startTime,
         ], $this->assetAvailability
         ) )->update();
@@ -114,9 +113,9 @@ class ConfirmAssetBooking extends BaseAvailability
      */
     private function shrinkMiddlePartOfAvailability ()
     {
-        $this->createAvailability($this->assetAvailability->start_time, $this->startTime, $this->pickupVenue->id);
+        $this->createAvailability($this->assetAvailability->start_time, $this->startTime, $this->pickupAddress->id);
 
-        $this->createAvailability($this->endTime, $this->assetAvailability->end_time, $this->dropVenue->id);
+        $this->createAvailability($this->endTime, $this->assetAvailability->end_time, $this->dropAddress->id);
 
         $this->shrinkWholeAvailability();
     }
@@ -128,7 +127,7 @@ class ConfirmAssetBooking extends BaseAvailability
      */
     private function shrinkLeftPartOfAvailability ()
     {
-        $this->createAvailability($this->endTime, $this->assetAvailability->end_time, $this->pickupVenue->id);
+        $this->createAvailability($this->endTime, $this->assetAvailability->end_time, $this->pickupAddress->id);
 
         $this->shrinkWholeAvailability();
     }
@@ -140,7 +139,7 @@ class ConfirmAssetBooking extends BaseAvailability
      */
     private function shrinkRightPartOfAvailability ()
     {
-        $this->createAvailability($this->assetAvailability->start_time, $this->startTime, $this->dropVenue->id);
+        $this->createAvailability($this->assetAvailability->start_time, $this->startTime, $this->dropAddress->id);
 
         $this->shrinkWholeAvailability();
     }

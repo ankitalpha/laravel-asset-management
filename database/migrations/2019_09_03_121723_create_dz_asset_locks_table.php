@@ -21,8 +21,7 @@ class CreateDzAssetLocksTable extends Migration
      */
     public function up ()
     {
-        Schema::create('dz_asset_locks', function (Blueprint $table)
-        {
+        Schema::create('dz_asset_locks', function (Blueprint $table) {
             $userTable = LaravelUtility::getUserTable();
 
             $table->bigIncrements('id');
@@ -34,9 +33,9 @@ class CreateDzAssetLocksTable extends Migration
             $table->dateTime('end_time');
             $table->dateTime('expiry_time');
 
-            $table->bigInteger('start_timestamp')->nullable();
-            $table->bigInteger('end_timestamp')->nullable();
-            $table->bigInteger('expiry_timestamp')->nullable();
+            $table->unsignedBigInteger('start_timestamp')->nullable();
+            $table->unsignedBigInteger('end_timestamp')->nullable();
+            $table->unsignedBigInteger('expiry_timestamp')->nullable();
 
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
@@ -46,6 +45,8 @@ class CreateDzAssetLocksTable extends Migration
 
             $table->foreign('created_by')->references('id')->on($userTable);
             $table->foreign('updated_by')->references('id')->on($userTable);
+
+            $table->index(['expiry_timestamp', 'user_id', 'asset_detail_id']);
 
             $table->timestamps();
             $table->softDeletes();

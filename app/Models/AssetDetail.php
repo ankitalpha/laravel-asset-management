@@ -4,7 +4,7 @@ namespace Drivezy\LaravelAssetManager\Models;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelAssetManager\Observers\AssetDetailObserver;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class AssetDetail
@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class AssetDetail extends BaseModel
 {
-
     /**
      * @var string
      * The AssetDetail table name.
@@ -23,12 +22,19 @@ class AssetDetail extends BaseModel
     protected $table = 'dz_asset_details';
 
     /**
-     * @return BelongsTo
-     * @return AssetCategory object
+     * @return HasOne
      */
     public function asset_category ()
     {
-        return $this->belongsTo(AssetCategory::class);
+        return $this->hasOne(AssetCategory::class);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function address ()
+    {
+        return $this->hasOne(Address::class);
     }
 
     /**

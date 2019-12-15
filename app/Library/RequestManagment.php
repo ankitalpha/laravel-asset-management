@@ -1,6 +1,6 @@
 <?php
 
-namespace Drivezy\LaravelAssetManager;
+namespace Drivezy\LaravelAssetManager\Library;
 
 /**
  * Class BaseBooking
@@ -60,7 +60,7 @@ class RequestManagment
         if ( !$this->preValidation() )
             return $this->request = failure_message($this->request);
 
-        $this->sanitizer();
+        $this->sanitiser();
 
         if ( !$this->postValidation() )
             return $this->request = failure_message($this->request);
@@ -92,10 +92,10 @@ class RequestManagment
      * Sanitize request
      * @return mixed|void
      */
-    public function sanitizer ()
+    public function sanitiser ()
     {
-        foreach ( $this->sanitizers as $sanitizer ) {
-            $this->request = ( new $sanitizer($this->request) )->sanitize();
+        foreach ( $this->sanitisers as $sanitiser ) {
+            $this->request = ( new $sanitiser($this->request) )->sanitiser();
 
             if ( !self::$listen ) break;
         }
@@ -108,7 +108,7 @@ class RequestManagment
     public function postValidation ()
     {
         foreach ( $this->postValidations as $validation ) {
-            $this->request = ( new $validation($this->request) )->validate();
+            $this->request = ( new $validation($this->request) )->validation();
 
             if ( !$this->request ) return false;
         }
@@ -122,7 +122,7 @@ class RequestManagment
     public function process ()
     {
         foreach ( $this->process as $process ) {
-            $this->request = ( new $process($this->request) )->process();
+            $this->request = ( new $process($this->request) )->procedure();
 
             if ( !self::$listen ) break;
         }

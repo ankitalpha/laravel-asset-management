@@ -29,10 +29,12 @@ class CreateDzAssetDetailsTable extends Migration
 
             $table->string('name')->nullable();
             $table->string('identifier')->nullable();
-            $table->boolean('active')->default(false);
 
             $table->unsignedInteger('asset_category_id')->nullable();
-            $table->unsignedInteger('home_venue_id')->nullable();
+            $table->unsignedInteger('address_id')->nullable();
+
+            $table->boolean('active')->default(false);
+            $table->boolean('return_overdue')->default(false);
 
             $table->string('source_type')->nullable();
             $table->unsignedInteger('source_id')->nullable();
@@ -41,7 +43,7 @@ class CreateDzAssetDetailsTable extends Migration
             $table->unsignedInteger('updated_by')->nullable();
 
             $table->foreign('asset_category_id')->references('id')->on('dz_asset_categories');
-            $table->foreign('home_venue_id')->references('id')->on('dz_venues');
+            $table->foreign('address_id')->references('id')->on('dz_address_details');
 
             $table->foreign('created_by')->references('id')->on($userTable);
             $table->foreign('updated_by')->references('id')->on($userTable);

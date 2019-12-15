@@ -4,7 +4,7 @@ namespace Drivezy\LaravelAssetManager\Models;
 
 use Drivezy\LaravelUtility\Models\BaseModel;
 use Drivezy\LaravelAssetManager\Observers\AssetAvailabilityObserver;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class AssetAvailability
@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class AssetAvailability extends BaseModel
 {
-
     /**
      * @var string
      * The AssetAvailability table name.
@@ -23,30 +22,30 @@ class AssetAvailability extends BaseModel
     protected $table = 'dz_asset_availabilities';
 
     /**
-     * @return BelongsTo
-     * @return AssetDetail object
-     */
-    public function asset_detail ()
-    {
-        return $this->belongsTo(AssetDetail::class);
-    }
-
-    /**
-     * @return BelongsTo
+     * @return HasOne
      * @return AssetCategory object
      */
     public function asset_category ()
     {
-        return $this->belongsTo(AssetCategory::class);
+        return $this->hasOne(AssetCategory::class);
     }
 
     /**
-     * @return BelongsTo
+     * @return HasOne
+     * @return AssetDetail object
+     */
+    public function asset_detail ()
+    {
+        return $this->hasOne(AssetDetail::class);
+    }
+
+    /**
+     * @return HasOne
      * @return Venue object
      */
-    public function venue ()
+    public function address ()
     {
-        return $this->belongsTo(Venue::class);
+        return $this->hasOne(Address::class);
     }
 
     /**
@@ -55,6 +54,6 @@ class AssetAvailability extends BaseModel
     public static function boot ()
     {
         parent::boot();
-//        self::observe(new AssetAvailabilityObserver());
+        self::observe(new AssetAvailabilityObserver());
     }
 }

@@ -15,6 +15,11 @@ use Illuminate\Support\Str;
  */
 class BaseSearch
 {
+    /**
+     * To determine admin or not as some privilege for admin.
+     * @var bool
+     */
+    protected $admin = false;
 
     /**
      * BaseSearchUtility constructor.
@@ -55,6 +60,9 @@ class BaseSearch
                         $query->orWhereBetween('end_timestamp', [$this->startTime, $this->endTime]);
                         $query->orWhereBetween('expiry_timestamp', [$this->startTime, $this->endTime]);
                     });
+            })->whereHas('asset_detail', function ($query) {
+                $query->where('return_overdue', false);
+                $query->where('active', true);
             });
     }
 
@@ -65,7 +73,14 @@ class BaseSearch
     public function baseExtensionQuery ()
     {
         return AssetAvailability::where('asset_detail_id', $this->assetDetailIds)
-            ->where('end_timestamp', '=', $this->endTime);
+            ->where('end_timestamp', '=', $this->endTime)
+            ->whereHas('asset_detail', function ($query) {
+                $query->when(!$this->admin, function ($query) {
+                    $query->where('return_overdue', false);
+                })->where('active', true);
+            })->whereHas('asset_category', function ($query) {
+                $query->where('active', true);
+            });
     }
 
     /**
@@ -75,6 +90,13 @@ class BaseSearch
     public function basePreponeQuery ()
     {
         return AssetAvailability::where('asset_detail_id', $this->assetDetailIds)
-            ->where('start_timestamp', '=', $this->endTime);
+            ->where('start_timestamp', '=', $this->endTime)
+            ->whereHas('asset_detail', function ($query) {
+                $query->when(!$this->admin, function ($query) {
+                    $query->where('return_overdue', false);
+                })->where('active', true);
+            })->whereHas('asset_category', function ($query) {
+                $query->where('active', true);
+            });
     }
 }
