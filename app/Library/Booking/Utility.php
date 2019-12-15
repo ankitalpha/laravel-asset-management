@@ -4,6 +4,7 @@ namespace Drivezy\LaravelAssetManager\Library\Booking;
 
 use Drivezy\LaravelAssetManager\Library\AssetManagement\AssetAvailability\ResetAssetAvailability;
 use Drivezy\LaravelAssetManager\Models\Address;
+use Drivezy\LaravelAssetManager\Models\AssetBooking;
 use Drivezy\LaravelAssetManager\Models\AssetDetail;
 use Drivezy\LaravelAssetManager\Models\AssetLock;
 use Illuminate\Support\Facades\Auth;
@@ -20,11 +21,14 @@ class Utility
 {
     /**
      * This method will drop the all the locks being acquired by the logged in user
+     * @param userId null|int
      * @return bool
      */
-    public static function dropUserLock ()
+    public static function dropUserLock ($userId = null)
     {
-        return AssetLock::where('user_id', Auth::id())->forceDelete();
+        $userId = $userId ?? Auth::id();
+
+        return AssetLock::where('user_id', $userId)->forceDelete();
     }
 
     /**
@@ -67,5 +71,19 @@ class Utility
         $columns = Schema::getColumnListing($table);
 
         return array_diff($columns, $ignore);
+    }
+
+    /**
+     * @return int
+     * @todo make a better logic than this
+     */
+    public static function generateReferenceNumber ()
+    {
+        while ( true ) {
+            $token = rand(1000000000, 9999999999);
+
+            if ( 0 == AssetBooking::where('reference_number', '=', $token)->count() )
+                return $token;
+        }
     }
 }

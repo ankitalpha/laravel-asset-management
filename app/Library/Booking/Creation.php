@@ -10,26 +10,25 @@ use Drivezy\LaravelAssetManager\Models\AssetBooking;
  *
  * @see https://github.com/drivezy/laravel-asset-manager
  * @author Ankit Tiwari  ankit19.alpha@gmail.com>
- * TODO need to modify
  */
 class Creation
 {
-
     /**
      * Creation constructor.
      * @param $request
      */
     public function __construct ($request)
     {
-        $bookingObject = ( new BookingManagement($request) )->request;
+        $bookingObject = ( new Management($request) )->request;
 
         $this->preValidations = $bookingObject->preValidations;
-        $this->sanitizers = $bookingObject->sanitizers;
+        $this->sanitisers = $bookingObject->sanitisers;
         $this->postValidations = $bookingObject->postValidations;
 
         $this->process = $bookingObject->process;
         $this->responseManager = $bookingObject->responseManager;
 
+        //todo create it accordingly
         array_push($this->preValidations, BookingCreationRequestValidation::class);
 
         $this->request = $bookingObject->request;
@@ -45,7 +44,7 @@ class Creation
         if ( !$this->preValidation() )
             return $this->request = failure_message($this->request);
 
-        $this->sanitizer();
+        $this->sanitiser();
 
         if ( !$this->postValidation() )
             return $this->request = failure_message($this->request);
@@ -65,8 +64,7 @@ class Creation
     public function bookCar ()
     {
         Utility::dropUserLock();
-
-        $this->request->booking = $this->createBookingObject();
+        $this->createBookingObject();
     }
 
 
@@ -76,30 +74,16 @@ class Creation
      */
     private function createBookingObject ()
     {
-        $booking = new AssetBooking();
+        $this->request->booking = new AssetBooking();
 
-        //todo add logic for token creation
-        $booking->token = CustomBooking::getBookingReference();
+        $columns = Utility::getColumns('dz_asset_bookings', ['id']);
 
-        $booking->user_id = $this->request->user->id;
-        $booking->asset_category_id = $this->request->car->id;
+        foreach ( $columns as $column ) {
+            $this->request->booking->$column = $this->request->$column ?? null;
+        }
 
-        $booking->start_time = $this->request->start_time;
-        $booking->end_time = $this->request->end_time;
-
-        $booking->type_id = $this->request->type_id;
-
-        $booking->coupon_id = isset($this->request->coupon) ? $this->request->coupon->id : null;
-
-        $booking->drop_address_id = $this->request->drop_address_id;
-        $booking->pickup_address_id = $this->request->pickup_address_id;
-
-        $booking->asset_detail_id = $this->request->asset_detail_id;
-        $booking->tentative_amount = $this->request->tentative_amount;
-
-        $booking->save();
-
-        return $booking;
+        $this->request->booking->reference_number = Utility::generateReferenceNumber();
+        $this->request->booking->save();
     }
 
     /**

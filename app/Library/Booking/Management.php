@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\Booking;
+namespace Drivezy\LaravelAssetManager\Library\Booking;
 /**
  * Class Management
  * @package App\Library\Booking
@@ -10,7 +10,6 @@ namespace App\Library\Booking;
  */
 class Management
 {
-
     /**
      * The request variable.
      * var array|null

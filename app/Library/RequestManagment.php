@@ -60,7 +60,7 @@ class RequestManagment
         if ( !$this->preValidation() )
             return $this->request = failure_message($this->request);
 
-        $this->sanitizer();
+        $this->sanitiser();
 
         if ( !$this->postValidation() )
             return $this->request = failure_message($this->request);
