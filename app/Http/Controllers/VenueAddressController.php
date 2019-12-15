@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Library\RecordManagement\AddressDetailManagement;
+use Drivezy\LaravelAssetManager\Library\RecordManagement\AddressDetailManagement;
 use Drivezy\LaravelAssetManager\Models\Address;
 use Drivezy\LaravelRecordManager\Controllers\RecordController;
 

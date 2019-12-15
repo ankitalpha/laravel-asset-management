@@ -38,8 +38,9 @@ class Creation extends RequestManagment
     {
         $result = $this->classInstance->execute();
 
-        if ( !$result['success'] )
+        if ( !$result['success'] ) {
             return $result;
+        }
 
         $this->create();
 

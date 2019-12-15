@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\RecordManagement;
+namespace Drivezy\LaravelAssetManager\Library\RecordManagement;
 
 use Drivezy\LaravelAssetManager\Models\Address;
 use Drivezy\LaravelAssetManager\Models\AssetDetail;

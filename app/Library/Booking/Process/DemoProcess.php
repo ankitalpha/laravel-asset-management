@@ -3,7 +3,6 @@
 namespace Drivezy\LaravelAssetManager\Library\Booking\Process;
 
 use Drivezy\LaravelAssetManager\Library\Process;
-use JRApp\Libraries\Booking\CustomBooking;
 
 /**
  * todo this is just a demo class to understand structure of RequestManagement framework
