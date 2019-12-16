@@ -22,8 +22,3 @@ Route::group(['namespace' => 'Drivezy\LaravelAssetManager\Controllers',
 Route::group(['namespace' => 'Drivezy\LaravelAssetManager\Controllers'], function () {
     Route::resource('getAssetsAvailability', 'AssetAvailabilityController@assetAvailability');
 });
-
-//todo clear with hemant sir
-Route::group(['namespace' => 'Drivezy\LaravelAssetManager\Controllers'], function () {
-    Route::resource('bookAsset', 'AssetAvailabilityController@createBooking');
-})->middleware('auth');
