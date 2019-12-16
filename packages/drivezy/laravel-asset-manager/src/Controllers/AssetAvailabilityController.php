@@ -2,10 +2,8 @@
 
 namespace Drivezy\LaravelAssetManager\Controllers;
 
-use Drivezy\LaravelAssetManager\Library\Booking\Creation;
-use Drivezy\LaravelAssetManager\Library\Booking\Management;
+use Drivezy\LaravelAssetManager\Models\AssetAvailability;
 use Drivezy\LaravelRecordManager\Controllers\RecordController;
-use Illuminate\Http\Request;
 
 /**
  * Class AssetAvailabilityController
@@ -17,29 +15,7 @@ use Illuminate\Http\Request;
 class AssetAvailabilityController extends RecordController
 {
     /**
-     * Fetch asset availability for the asset
-     *
-     * @param Request $request
-     * @return mixed
+     * @var string
      */
-    public function assetAvailability (Request $request)
-    {
-        $booking = ( new Management($request->all()) )->request;
-
-        return fixed_response($booking->execute());
-    }
-
-
-    /**
-     * @param Request $request
-     * @return mixed
-     * @throws \Exception
-     */
-    public function createBooking (Request $request)
-    {
-        $request->request->set('create_booking', true);
-        $booking = ( new Management($request->all()) )->request;
-
-        return fixed_response(( new Creation($booking) )->book());
-    }
+    protected $model = AssetAvailability::class;
 }

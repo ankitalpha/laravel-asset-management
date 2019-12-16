@@ -14,7 +14,6 @@ use Drivezy\LaravelAssetManager\Models\Zone;
  */
 class ZoneController extends RecordController
 {
-
     /**
      * @var Zone model path.
      */

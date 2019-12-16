@@ -14,7 +14,6 @@ use Drivezy\LaravelAssetManager\Models\AssetCategory;
  */
 class AssetCategoryController extends RecordController
 {
-
     /**
      * @var AssetCategory model path.
      */

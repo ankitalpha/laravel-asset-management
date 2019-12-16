@@ -14,7 +14,6 @@ use Drivezy\LaravelAssetManager\Models\AssetLock;
  */
 class AssetLockController extends RecordController
 {
-
     /**
      * @var AssetLock model path.
      */

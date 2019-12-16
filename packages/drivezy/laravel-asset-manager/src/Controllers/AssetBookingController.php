@@ -14,7 +14,6 @@ use Drivezy\LaravelAssetManager\Models\AssetBooking;
  */
 class AssetBookingController extends RecordController
 {
-
     /**
      * @var AssetBooking model path.
      */

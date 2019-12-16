@@ -14,7 +14,6 @@ use Drivezy\LaravelAssetManager\Models\Region;
  */
 class RegionController extends RecordController
 {
-
     /**
      * @var Region model path.
      */

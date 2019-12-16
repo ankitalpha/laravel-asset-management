@@ -14,7 +14,6 @@ use Drivezy\LaravelAssetManager\Models\Venue;
  */
 class VenueController extends RecordController
 {
-
     /**
      * @var Venue model path.
      */

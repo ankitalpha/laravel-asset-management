@@ -14,7 +14,6 @@ use Drivezy\LaravelAssetManager\Models\Address;
  */
 class AdminAddressController extends RecordController
 {
-
     /**
      * @var Address model path.
      */
